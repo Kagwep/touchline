@@ -83,6 +83,7 @@ const transformMatch = (rawData: any) => {
         current_turn: getPrimitiveValue(matchData.current_turn),
         turn_deadline: getPrimitiveValue(matchData.turn_deadline),
         created_at:getPrimitiveValue(matchData.created_ate),
+        last_action_type: getPrimitiveValue(matchData.last_action_type),
         last_action_timestamp: getPrimitiveValue(matchData.last_action_timestamp)
     };
 };

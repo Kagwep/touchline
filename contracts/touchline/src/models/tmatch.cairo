@@ -15,6 +15,7 @@ pub struct Match {
     pub current_turn: u8,
     pub turn_deadline: u64,
     pub created_at: u64,
+    pub last_action_type: ActionType,
     pub last_action_timestamp: u64
 }
 
@@ -164,6 +165,7 @@ pub impl MatchImpl of MatchTrait {
             current_turn: 0,
             turn_deadline: 0,
             created_at: time,
+            last_action_type:ActionType::None,
             last_action_timestamp: 0
         }
     }

@@ -70,20 +70,14 @@ pub mod tmatch {
             
             
             // Create the match
-            let new_match = Match {
+            let new_match: Match = MatchTrait::new(
                 match_id,
                 home_player_id,
                 away_player_id: Zero::zero(),
-                home_squad_id,
+                home_squad_id: home_squad_id,
                 away_squad_id: 0,
-                home_score: 0,
-                away_score: 0,
-                status: MatchStatus::Created,
-                current_turn: 0,
-                turn_deadline: 0,
-                created_at: timestamp,
-                last_action_timestamp: timestamp
-            };
+                time:timestamp
+            );
             
             // Write to world
             world.write_model(@new_match);

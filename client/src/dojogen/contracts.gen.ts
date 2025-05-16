@@ -25,19 +25,19 @@ export function client(provider: DojoProvider) {
 		}
 	};
 
-	const build_actions_reveal_calldata = (matchId: BigNumberish, cardId: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish): DojoCall => {
+	const build_actions_reveal_calldata = (matchId: BigNumberish, cardId: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish): DojoCall => {
 		return {
 			contractName: "actions",
 			entrypoint: "reveal",
-			calldata: [matchId, cardId, playerName, team, position, attack, defense, special, rarity, season, secretKey, squadId],
+			calldata: [matchId, cardId, secretKey, squadId],
 		};
 	};
 
-	const actions_reveal = async (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish) => {
+	const actions_reveal = async (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish) => {
 		try {
 			return await provider.execute(
 				snAccount as any, 
-				build_actions_reveal_calldata(matchId, cardId, playerName, team, position, attack, defense, special, rarity, season, secretKey, squadId),
+				build_actions_reveal_calldata(matchId, cardId, secretKey, squadId),
 				"touchline",
 			);
 		} catch (error) {

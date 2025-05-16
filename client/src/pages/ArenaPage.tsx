@@ -31,10 +31,19 @@ import { useTouchlineStore } from '../utils/touchline';
 import WalletButton from '../components/WalletButton';
 import { ensureHexZeroPrefix, removeLeadingZeros } from '../utils/sanitizer';
 import { MatchStatus } from '../utils/types';
-import { Account, hash } from 'starknet';
+import { Account, CairoCustomEnum, hash } from 'starknet';
 import { hashCard, parseStarknetError } from '../utils';
 import { useDojo } from '../dojo/useDojo';
+import SelectActionTypeModal from '../components/SelectActionTypeModal';
 
+
+const ActionType = {
+  NONE: "None",
+  ATTACK: "Attack",
+  DEFEND: "Defend",
+  SPECIAL: "Special",
+  SUBSTITUTE: "Substitute"
+};
 
 
 const ArenaPage = () => {
@@ -58,7 +67,7 @@ const ArenaPage = () => {
   // State for the secret
   const [secret, setSecret] = useState('');
   const [secretVisible, setSecretVisible] = useState(false);
-
+  const [isActionModalOpen, setIsActionModalOpen] = useState(false);
 
   const specialCards = state.specialCards;
   const tacticalCards = state.tacticCards;
@@ -93,6 +102,17 @@ const ArenaPage = () => {
         return 'Unknown status';
     }
   };
+
+    const handleActionSelected = (actionType) => {
+
+    // Execute the selected action with the card
+    if (selectedCard) {
+      console.log(actionType)
+     commitCardAction(selectedCard,actionType)
+    }
+    
+    toast.success(`${actionType} action selected`);
+  };
   
   // Calculate time remaining in current turn
   const [timeRemaining, setTimeRemaining] = useState('');
@@ -112,49 +132,58 @@ const ArenaPage = () => {
     return positionNames[index] || `POS ${index + 1}`;
   };
   
+  const commitCardAction = async (card: any,last_action_type:any) => {
+  try {
+    const commitHash = hashCard(card, secret);
+    const result = await (await client).actions.commit(
+      account as Account,
+      match_id,
+      commitHash,
+      new CairoCustomEnum({ [last_action_type]: "()" }),
+    );
+    
+    if (result && result.transaction_hash) {
+      toast.success("Committed successfully!");
+    }
+    
+    setSelectedCard(null);
+  } catch (error) {
+    const errorParsed = parseStarknetError(error);
+    
+    if (errorParsed) {
+      toast.error(errorParsed);
+    } else {
+      console.error('Error committing action:', error);
+      toast.error('Failed to commit action');
+    }
+  } finally {
+    setIsCommitting(false);
+  }
+};
+
   // Handle committing a card action
   const handleCommit = async (card) => {
     if (!secret) {
       toast.error('You must enter a secret to commit your action');
       return;
     }
+
+   if (match.status as unknown as string != MatchStatus.IN_PROGRESS) {
+    toast.error('Match must be in progress');
+    return
+   };
     
     setIsCommitting(true);
+
+    const last_action_type = match.last_action_type;
+
+     if (last_action_type as unknown as string === ActionType.NONE) {
+      setIsActionModalOpen(true);
+    } else {
+        commitCardAction(card,last_action_type)
+    }
     
-    try {
-      // Here you would call your smart contract
-      // Example: await contract.commitAction(match.match_id, card.id, secret);
 
-//       const actions_commit: (snAccount: Account | AccountInterface, matchId: BigNumberish, commitHash: BigNumberish, subActionType: CairoCustomEnum) => Promise<{
-//     transaction_hash: string;
-// }>
-
-      const commitHash = hashCard(card,secret);
-
-      const result = await (await client).actions.commit(
-          account as Account,
-          match_id,
-          commitHash,
-          
-        );
-
-        if (result && result.transaction_hash){
-          toast.success("commited successfully!")
-        }
-      setSelectedCard(null);
-    } catch (error) {
-        
-    const errorParsed = parseStarknetError(error);
-
-    if (errorParsed){
-      toast.error(errorParsed);
-    }else{
-      console.error('Error committing action:', error);
-      toast.error('Failed to commit action');
-    }
-    } finally {
-      setIsCommitting(false);
-    }
   };
   
   // Handle revealing a card action
@@ -163,22 +192,44 @@ const ArenaPage = () => {
       toast.error('You must enter your secret to reveal your action');
       return;
     }
+
+    if (match.status as unknown as string != MatchStatus.PENDINGREVEAL){
+      toast.error('Must be in reveal phase');
+      return
+    };
     
     setIsRevealing(true);
+
+
+    
+
+    // (property) reveal: (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish) => Promise<...>
     
     try {
-      // Here you would call your smart contract
-      // Example: await contract.revealAction(match.match_id, card.id, secret);
-      
-      // Simulate blockchain delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      toast.success('Action revealed successfully!');
-      setSelectedCard(null);
-    } catch (error) {
+    
+    const result = await (await client).actions.reveal(
+      account as Account,
+      match_id,
+      card.id,
+      secret,
+      squad_id
+    );
+    
+    if (result && result.transaction_hash) {
+      toast.success("Reveal successfull!");
+    }
+    
+    setSelectedCard(null);
+  } catch (error) {
+    const errorParsed = parseStarknetError(error);
+    
+    if (errorParsed) {
+      toast.error(errorParsed);
+    } else {
       console.error('Error revealing action:', error);
       toast.error('Failed to reveal action');
-    } finally {
+    }
+  } finally {
       setIsRevealing(false);
     }
   };
@@ -425,6 +476,14 @@ const ArenaPage = () => {
             </div>
             
             <div className="flex space-x-6 items-center">
+
+                            {/* Match Action */}
+              <div className="flex flex-col items-center">
+                <div className="text-sm text-green-300">Match Action</div>
+                <div className="font-bold">{match ? (match.last_action_type as unknown as string) : 'Loading...'}</div>
+              </div>
+
+
               {/* Match Status */}
               <div className="flex flex-col items-center">
                 <div className="text-sm text-green-300">Match Status</div>
@@ -548,7 +607,7 @@ const ArenaPage = () => {
         
         {/* Selected Card Details */}
         {selectedCard && (
-          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
             <div className="bg-green-800 rounded-xl p-6 max-w-lg w-full">
               <div className="flex justify-between items-start mb-4">
                 <h3 className="text-xl font-bold text-green-300 flex items-center">
@@ -662,14 +721,14 @@ const ArenaPage = () => {
         )}
         
         {/* Game Log Section */}
-        <div className="bg-green-800 rounded-xl p-4 mb-6">
+        {/* <div className="bg-green-800 rounded-xl p-4 mb-6">
           <h2 className="text-xl font-bold mb-4 flex items-center">
             <Clock size={20} className="mr-2 text-green-300" />
             Match History
           </h2>
           
           <div className="bg-green-900 rounded-lg p-4 h-40 overflow-y-auto">
-            {/* These would be populated from your contract events or game state */}
+            
             <div className="mb-2 border-b border-green-800 pb-2">
               <div className="flex items-center">
                 <div className="text-yellow-400 mr-2">
@@ -718,7 +777,7 @@ const ArenaPage = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         
         {/* Footer */}
         <div className="bg-green-900 rounded-xl p-4 text-center">
@@ -730,6 +789,12 @@ const ArenaPage = () => {
           </p>
         </div>
       </div>
+        <SelectActionTypeModal
+        isOpen={isActionModalOpen}
+        onClose={() => setIsActionModalOpen(false)}
+        onActionSelected={handleActionSelected}
+        card={selectedCard}
+      />
     </div>
   );
 };

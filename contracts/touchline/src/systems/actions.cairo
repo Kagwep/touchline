@@ -14,14 +14,6 @@ pub trait IActions<T> {
     fn reveal(ref self: T,
         match_id:u128,
         card_id: u128,
-        player_name: felt252,
-        team: felt252,
-        position: Position,
-        attack: u8,
-        defense: u8,
-        special: u8,
-        rarity: Rarity,
-        season: felt252,
         secret_key: felt252,
         squad_id:u8
         );
@@ -101,6 +93,19 @@ pub mod actions {
             let mut tmatch: Match = world.read_model(match_id);
 
             assert(tmatch.status == MatchStatus::InProgress, 'Match not in progress');
+
+            assert(sub_action_type != ActionType::None,'Action cant none');
+
+            let mut prev_action: TurnAction  = world.read_model((match_id,player));
+
+            let opp_action: TurnAction =  if tmatch.home_player_id == player {
+                world.read_model((match_id, tmatch.away_player_id))
+            }else{
+                world.read_model((match_id, tmatch.home_player_id))
+            };
+
+
+            assert(opp_action.action_type != sub_action_type, 'Invalid Move');
            
             if tmatch.home_player_id == player {
                 assert(tmatch.current_turn  % 2 == 1, 'Not Your Turn');
@@ -126,21 +131,13 @@ pub mod actions {
             
             world.write_model(@card_commit_hash);
 
-            let opp_action: TurnAction =  if tmatch.home_player_id == player {
-                world.read_model((match_id, tmatch.away_player_id))
-            }else{
-                world.read_model((match_id, tmatch.home_player_id))
-            };
-
-
-            let mut prev_action: TurnAction  = world.read_model((match_id,player));
-
-            assert(opp_action.action_type != sub_action_type, 'Invalid Move');
 
             prev_action.action_type = sub_action_type;
             prev_action.timestamp = timestamp;
 
             world.write_model(@prev_action);
+
+            tmatch.last_action_type = sub_action_type;
 
 
             tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
@@ -153,14 +150,6 @@ pub mod actions {
         fn reveal(ref self: ContractState, 
             match_id:u128,
             card_id: u128,
-            player_name: felt252,
-            team: felt252,
-            position: Position,
-            attack: u8,
-            defense: u8,
-            special: u8,
-            rarity: Rarity,
-            season: felt252,
             secret_key: felt252,
             squad_id:u8
         ) {
@@ -182,17 +171,7 @@ pub mod actions {
                 assert(tmatch.current_turn  % 2 == 0, 'Not Your Turn');
             }
 
-            let player_card: Card = Card {
-                id: card_id,
-                player_name: player_name,
-                team: team,
-                position: position,
-                attack: attack,
-                defense: defense,
-                special: special,
-                rarity: rarity,
-                season: season,
-              };
+              let player_card: Card = world.read_model(card_id);
 
               let current_hash: u256 = compute_hash_on_card(player_card,secret_key);
 

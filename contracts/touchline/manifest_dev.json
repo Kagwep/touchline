@@ -1312,8 +1312,8 @@
   },
   "contracts": [
     {
-      "address": "0x46cd037dcabd6d986a81366245c643bd80a2d455b3ff1ab84424147ed148f46",
-      "class_hash": "0x16f9dc7d521788fdbe96aff504595ed0845fd2d0c0c4e2e2fd8284f17311cfc",
+      "address": "0x476d9c06b76f5d38e59922bbb2af0c6dbc75b91d94981a5d07ccdb87562635",
+      "class_hash": "0x51a690cbe0628138f694c23ea4ebe12172f02a33ddc302d797f62e8aad064b5",
       "abi": [
         {
           "type": "impl",
@@ -1411,54 +1411,6 @@
           ]
         },
         {
-          "type": "enum",
-          "name": "touchline::models::card::Position",
-          "variants": [
-            {
-              "name": "Goalkeeper",
-              "type": "()"
-            },
-            {
-              "name": "Defender",
-              "type": "()"
-            },
-            {
-              "name": "Midfielder",
-              "type": "()"
-            },
-            {
-              "name": "Forward",
-              "type": "()"
-            }
-          ]
-        },
-        {
-          "type": "enum",
-          "name": "touchline::models::card::Rarity",
-          "variants": [
-            {
-              "name": "Common",
-              "type": "()"
-            },
-            {
-              "name": "Rare",
-              "type": "()"
-            },
-            {
-              "name": "Epic",
-              "type": "()"
-            },
-            {
-              "name": "Legendary",
-              "type": "()"
-            },
-            {
-              "name": "Icon",
-              "type": "()"
-            }
-          ]
-        },
-        {
           "type": "interface",
           "name": "touchline::systems::actions::IActions",
           "items": [
@@ -1493,38 +1445,6 @@
                 {
                   "name": "card_id",
                   "type": "core::integer::u128"
-                },
-                {
-                  "name": "player_name",
-                  "type": "core::felt252"
-                },
-                {
-                  "name": "team",
-                  "type": "core::felt252"
-                },
-                {
-                  "name": "position",
-                  "type": "touchline::models::card::Position"
-                },
-                {
-                  "name": "attack",
-                  "type": "core::integer::u8"
-                },
-                {
-                  "name": "defense",
-                  "type": "core::integer::u8"
-                },
-                {
-                  "name": "special",
-                  "type": "core::integer::u8"
-                },
-                {
-                  "name": "rarity",
-                  "type": "touchline::models::card::Rarity"
-                },
-                {
-                  "name": "season",
-                  "type": "core::felt252"
                 },
                 {
                   "name": "secret_key",
@@ -2398,8 +2318,8 @@
       ]
     },
     {
-      "address": "0x7396a658203ab96993054682fa689755c8989b4a65c6da57b5e3468e667b69e",
-      "class_hash": "0x749b14247b1cdb89548d9e5e1891e8b9815175628bc5127eabe34bb2ba967f4",
+      "address": "0x5310c1337316854f30b1ea4b8e57784609cb0e0103db0bbb1c5a3b59b9cb908",
+      "class_hash": "0x6cae34658235b9b55c4a57795eed6933464f824107228df581f323a4adfbd2d",
       "abi": [
         {
           "type": "impl",
@@ -2660,7 +2580,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x7daab4c86f4e5944f4711dd59a8e6a769a344c4a5f57aa8f91b41b8bf50f5bd",
+      "class_hash": "0x28cca40f8f44e5c767ca3a68aee9b12f6a7a05b23f6e6e7cd09c7f17e508b5",
       "tag": "touchline-Match",
       "selector": "0x12e08b84e48a920473d0539d29648405bb6dc5227987e7a4148d0da620e92ea"
     },

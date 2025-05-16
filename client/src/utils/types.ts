@@ -12,6 +12,7 @@ export type CardWithPosition = Card & {
       HOME_WIN: "HomeWin",
       AWAY_WIN: "AwayWin",
       DRAW: "Draw",
-      ABANDONED: "Abandoned"
+      ABANDONED: "Abandoned",
+      PENDINGREVEAL:"PendingReveal"
     };
   

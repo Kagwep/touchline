@@ -159,6 +159,7 @@ export interface Match {
 	current_turn: BigNumberish;
 	turn_deadline: BigNumberish;
 	created_at: BigNumberish;
+	last_action_type: ActionTypeEnum;
 	last_action_timestamp: BigNumberish;
 }
 
@@ -174,6 +175,7 @@ export interface MatchValue {
 	current_turn: BigNumberish;
 	turn_deadline: BigNumberish;
 	created_at: BigNumberish;
+	last_action_type: ActionTypeEnum;
 	last_action_timestamp: BigNumberish;
 }
 
@@ -415,7 +417,6 @@ export const matchStatus = [
 	'PendingReveal',
 ] as const;
 export type MatchStatus = { [key in typeof matchStatus[number]]: string };
-
 export type MatchStatusEnum = CairoCustomEnum;
 
 export interface TouchlineSoccerSchemaType extends ISchemaType {
@@ -622,6 +623,12 @@ export const schema: TouchlineSoccerSchemaType = {
 			current_turn: 0,
 			turn_deadline: 0,
 			created_at: 0,
+		last_action_type: new CairoCustomEnum({ 
+					None: "",
+				Attack: undefined,
+				Defend: undefined,
+				Special: undefined,
+				Substitute: undefined, }),
 			last_action_timestamp: 0,
 		},
 		MatchValue: {
@@ -643,6 +650,12 @@ export const schema: TouchlineSoccerSchemaType = {
 			current_turn: 0,
 			turn_deadline: 0,
 			created_at: 0,
+		last_action_type: new CairoCustomEnum({ 
+					None: "",
+				Attack: undefined,
+				Defend: undefined,
+				Special: undefined,
+				Substitute: undefined, }),
 			last_action_timestamp: 0,
 		},
 		PrevRoundWinner: {
