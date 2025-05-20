@@ -105,11 +105,13 @@ export interface CardMatchCommitHash {
 	match_id: BigNumberish;
 	player_id: string;
 	card_hash: BigNumberish;
+	sub_hash: BigNumberish;
 }
 
 // Type definition for `touchline::models::tmatch::CardMatchCommitHashValue` struct
 export interface CardMatchCommitHashValue {
 	card_hash: BigNumberish;
+	sub_hash: BigNumberish;
 }
 
 // Type definition for `touchline::models::tmatch::CardMatchCommitReveal` struct
@@ -573,9 +575,11 @@ export const schema: SchemaType = {
 			match_id: 0,
 			player_id: "",
 		card_hash: 0,
+		sub_hash: 0,
 		},
 		CardMatchCommitHashValue: {
 		card_hash: 0,
+		sub_hash: 0,
 		},
 		CardMatchCommitReveal: {
 			match_id: 0,

@@ -2,7 +2,7 @@ import { DojoProvider, DojoCall } from "@dojoengine/core";
 import { Account, AccountInterface, BigNumberish, CairoOption, CairoCustomEnum, ByteArray } from "starknet";
 import * as models from "./models.gen";
 
-export function client(provider: DojoProvider) {
+export function setupWorld(provider: DojoProvider) {
 
 	const build_actions_commit_calldata = (matchId: BigNumberish, commitHash: BigNumberish, subActionType: CairoCustomEnum): DojoCall => {
 		return {
@@ -15,7 +15,7 @@ export function client(provider: DojoProvider) {
 	const actions_commit = async (snAccount: Account | AccountInterface, matchId: BigNumberish, commitHash: BigNumberish, subActionType: CairoCustomEnum) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_actions_commit_calldata(matchId, commitHash, subActionType),
 				"touchline",
 			);
@@ -25,19 +25,19 @@ export function client(provider: DojoProvider) {
 		}
 	};
 
-	const build_actions_reveal_calldata = (matchId: BigNumberish, cardId: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish): DojoCall => {
+	const build_actions_reveal_calldata = (matchId: BigNumberish, cardId: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish, subHash: BigNumberish): DojoCall => {
 		return {
 			contractName: "actions",
 			entrypoint: "reveal",
-			calldata: [matchId, cardId, playerName, team, position, attack, defense, special, rarity, season, secretKey, squadId],
+			calldata: [matchId, cardId, secretKey, squadId, subHash],
 		};
 	};
 
-	const actions_reveal = async (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish) => {
+	const actions_reveal = async (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish, subHash: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
-				build_actions_reveal_calldata(matchId, cardId, playerName, team, position, attack, defense, special, rarity, season, secretKey, squadId),
+				snAccount,
+				build_actions_reveal_calldata(matchId, cardId, secretKey, squadId, subHash),
 				"touchline",
 			);
 		} catch (error) {
@@ -57,7 +57,7 @@ export function client(provider: DojoProvider) {
 	const actions_substitutePlayer = async (snAccount: Account | AccountInterface, matchId: BigNumberish, prevCard: BigNumberish, cardId: BigNumberish, squadId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_actions_substitutePlayer_calldata(matchId, prevCard, cardId, squadId),
 				"touchline",
 			);
@@ -78,7 +78,7 @@ export function client(provider: DojoProvider) {
 	const actions_useTacticCard = async (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_actions_useTacticCard_calldata(matchId, cardId),
 				"touchline",
 			);
@@ -99,7 +99,7 @@ export function client(provider: DojoProvider) {
 	const players_createCard = async (snAccount: Account | AccountInterface, id: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_players_createCard_calldata(id, playerName, team, position, attack, defense, special, rarity, season),
 				"touchline",
 			);
@@ -120,7 +120,7 @@ export function client(provider: DojoProvider) {
 	const players_createSpecialAbility = async (snAccount: Account | AccountInterface, cardId: BigNumberish, abilityId: BigNumberish, name: BigNumberish, description: BigNumberish, bonusValue: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_players_createSpecialAbility_calldata(cardId, abilityId, name, description, bonusValue),
 				"touchline",
 			);
@@ -141,7 +141,7 @@ export function client(provider: DojoProvider) {
 	const players_updateRarity = async (snAccount: Account | AccountInterface, cardId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_players_updateRarity_calldata(cardId),
 				"touchline",
 			);
@@ -162,7 +162,7 @@ export function client(provider: DojoProvider) {
 	const players_updateStats = async (snAccount: Account | AccountInterface, cardId: BigNumberish, attack: BigNumberish, defense: BigNumberish, special: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_players_updateStats_calldata(cardId, attack, defense, special),
 				"touchline",
 			);
@@ -183,7 +183,7 @@ export function client(provider: DojoProvider) {
 	const squad_addCardToPosition = async (snAccount: Account | AccountInterface, squadId: BigNumberish, positionIndex: BigNumberish, cardId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_addCardToPosition_calldata(squadId, positionIndex, cardId),
 				"touchline",
 			);
@@ -204,7 +204,7 @@ export function client(provider: DojoProvider) {
 	const squad_calculateChemistry = async (snAccount: Account | AccountInterface, squadId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_calculateChemistry_calldata(squadId),
 				"touchline",
 			);
@@ -225,7 +225,7 @@ export function client(provider: DojoProvider) {
 	const squad_changeFormation = async (snAccount: Account | AccountInterface, squadId: BigNumberish, newFormation: CairoCustomEnum) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_changeFormation_calldata(squadId, newFormation),
 				"touchline",
 			);
@@ -246,7 +246,7 @@ export function client(provider: DojoProvider) {
 	const squad_createSquad = async (snAccount: Account | AccountInterface, name: BigNumberish, squadId: BigNumberish, formation: CairoCustomEnum) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_createSquad_calldata(name, squadId, formation),
 				"touchline",
 			);
@@ -267,7 +267,7 @@ export function client(provider: DojoProvider) {
 	const squad_removeCardFromPosition = async (snAccount: Account | AccountInterface, squadId: BigNumberish, cardId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_removeCardFromPosition_calldata(squadId, cardId),
 				"touchline",
 			);
@@ -288,7 +288,7 @@ export function client(provider: DojoProvider) {
 	const squad_renameSquad = async (snAccount: Account | AccountInterface, squadId: BigNumberish, newName: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_renameSquad_calldata(squadId, newName),
 				"touchline",
 			);
@@ -309,7 +309,7 @@ export function client(provider: DojoProvider) {
 	const squad_replaceCardToPosition = async (snAccount: Account | AccountInterface, squadId: BigNumberish, cardIdOne: BigNumberish, cardIdTwo: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_squad_replaceCardToPosition_calldata(squadId, cardIdOne, cardIdTwo),
 				"touchline",
 			);
@@ -330,7 +330,7 @@ export function client(provider: DojoProvider) {
 	const tmatch_createMatch = async (snAccount: Account | AccountInterface, homeSquadId: BigNumberish, matchId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_tmatch_createMatch_calldata(homeSquadId, matchId),
 				"touchline",
 			);
@@ -351,7 +351,7 @@ export function client(provider: DojoProvider) {
 	const tmatch_joinMatch = async (snAccount: Account | AccountInterface, matchId: BigNumberish, awaySquadId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_tmatch_joinMatch_calldata(matchId, awaySquadId),
 				"touchline",
 			);
@@ -372,7 +372,7 @@ export function client(provider: DojoProvider) {
 	const tmatch_startMatch = async (snAccount: Account | AccountInterface, matchId: BigNumberish) => {
 		try {
 			return await provider.execute(
-				snAccount as any, 
+				snAccount,
 				build_tmatch_startMatch_calldata(matchId),
 				"touchline",
 			);

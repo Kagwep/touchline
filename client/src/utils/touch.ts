@@ -8,6 +8,7 @@ import { useTouchlineStore} from './touchline';
 import { AccountInterface } from 'starknet';
 import { useNetworkAccount } from '../context/WalletContex';
 import { removeLeadingZeros } from './sanitizer';
+import { match } from 'node:assert';
 
 let intervalId: NodeJS.Timeout | null = null; // Keep polling alive across components
 // Helper to extract primitive value
@@ -190,7 +191,8 @@ const transformCardMatchCommitHash = (rawData: any) => {
         fieldOrder: [], 
         match_id: getPrimitiveValue(commitsData.match_id),
         player_id: getPrimitiveValue(commitsData.player_id),
-        card_hash: getPrimitiveValue(commitsData.card_hash)
+        card_hash: getPrimitiveValue(commitsData.card_hash),
+        sub_hash: getPrimitiveValue(commitsData.sub_hash)
     };
 };
 
@@ -205,10 +207,12 @@ const transformEntities = (rawEntities: any[], transformFn: (data: any) => any) 
 export const useAllEntities = (pollInterval = 5000) => {
     const { useDojoStore, client, sdk } = useDojoSDK();
     const state = useDojoStore((state) => state);
-    const { setMatch, setCard, setSquadPosition, setSquad,setCommit,setPlayerSquad, loadPlayerCards} = useGameStore();
+    const { setMatch, setCard, setSquadPosition, setSquad,setCommit,setPlayerSquad, loadPlayerCards,loadUsedCards,setSquadCardsUsed} = useGameStore();
   
     const {  match_id,squad_id } = useTouchlineStore((state) => state);
     const { account, address, status, isConnected } = useNetworkAccount();
+
+
 
     const fetchAllEntities = async () => {
         try {
@@ -278,6 +282,10 @@ export const useAllEntities = (pollInterval = 5000) => {
                     const commits = transformCardMatchCommitHash(entity);
                     if (commits) setCommit(commits);
                 }
+             if ('touchline-SquadCardUsed' in entity) {
+                    const squadCardUsed = transformSquadCardUsed(entity);
+                    if (squadCardUsed) setSquadCardsUsed(squadCardUsed);
+                }
             });
 
             // Transform each type of entity
@@ -294,6 +302,12 @@ export const useAllEntities = (pollInterval = 5000) => {
 
             if (squad_id > 0){
                 loadPlayerCards(account.address,squad_id);
+            }
+
+            
+
+            if(squad_id > 0 && match_id > 0){
+                loadUsedCards(account.address, squad_id, match_id);
             }
 
            // console.log(transformed)

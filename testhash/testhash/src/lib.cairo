@@ -80,7 +80,7 @@ fn compute_hash_on_card(card: Card, secret_key: felt252) -> u256 {
 
 
 
-fn hash_card_sequential(card: Card, secret_key: felt252) -> felt252 {
+fn hash_card_sequential(card: Card, secret_key: felt252) -> u256 {
     // Start hashing with the secret key
     let mut state = PoseidonTrait::new();
     state = state.update(secret_key);
@@ -95,7 +95,7 @@ fn hash_card_sequential(card: Card, secret_key: felt252) -> felt252 {
     state = state.update(card.season);
 
     // Finalize and return the hash
-    state.finalize()
+    state.finalize().into()
 }
 
 fn main() -> u32 {
@@ -130,18 +130,20 @@ mod tests {
     #[test]
     fn it_works() {
         let sample = Card {
-            id: 123456789,
-            player_name: 'Lionel Messi',
-            team: 'Inter Miami',
+            id: 1747717202683,
+            player_name: 'Anto',
+            team: 'Bet',
             position: Position::Forward,
-            attack: 94,
-            defense: 35,
-            special: 98,
-            rarity: Rarity::Legendary,
+            attack: 75,
+            defense: 75,
+            special: 1,
+            rarity: Rarity::Common,
             season: '2025',
           };
+
+        
     
-          println!("{}",hash_card_sequential(sample,'0xb79f5af6b'));
+          println!("{}",hash_card_sequential(sample,'moshi'));
 
           let low_felt: u128 = 175786093962502268072821494840241737693;
           let high_felt: u128 = 3826217269994083699543266288383934437;

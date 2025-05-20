@@ -8,15 +8,15 @@ mod tests {
     };
 
     use touchline::systems::actions::{actions, IActionsDispatcher, IActionsDispatcherTrait};
-    use touchline::models::{Position, m_Position, Moves, m_Moves, Direction};
+    use touchline::models::card{Card, m_Card, PositionToCard, m_PositionToCard,SpecialAbility, m_SpecialAbility,, Rarity,Position};
 
     fn namespace_def() -> NamespaceDef {
         let ndef = NamespaceDef {
             namespace: "touchline",
             resources: [
-                TestResource::Model(m_Position::TEST_CLASS_HASH),
-                TestResource::Model(m_Moves::TEST_CLASS_HASH),
-                TestResource::Event(actions::e_Moved::TEST_CLASS_HASH),
+                TestResource::Model(m_Card::TEST_CLASS_HASH),
+                TestResource::Model(m_PositionToCard::TEST_CLASS_HASH),
+                TestResource::Model(m_SpecialAbility::TEST_CLASS_HASH),
                 TestResource::Contract(actions::TEST_CLASS_HASH),
             ]
                 .span(),
@@ -45,28 +45,30 @@ mod tests {
         // Ensures permissions and initializations are synced.
         world.sync_perms_and_inits(contract_defs());
 
-        // Test initial position
-        let mut position: Position = world.read_model(caller);
-        assert(position.vec.x == 0 && position.vec.y == 0, 'initial position wrong');
+        let sample = Card {
+            id: 123456789,
+            player_name: 'Lionel Messi',
+            team: 'Inter Miami',
+            position: Position::Forward,
+            attack: 94,
+            defense: 35,
+            special: 98,
+            rarity: Rarity::Legendary,
+            season: '2025',
+          };
 
-        // Test write_model_test
-        position.vec.x = 122;
-        position.vec.y = 88;
 
-        world.write_model_test(@position);
+        world.write_model_test(@sample);
 
-        let mut position: Position = world.read_model(caller);
-        assert(position.vec.y == 88, 'write_value_from_id failed');
+        let mut card: Card = world.read_model(sample.id);
+        assert(card.season == '2025', 'write failed');
 
-        // Test model deletion
-        world.erase_model(@position);
-        let position: Position = world.read_model(caller);
-        assert(position.vec.x == 0 && position.vec.y == 0, 'erase_model failed');
+
     }
 
     #[test]
     #[available_gas(30000000)]
-    fn test_move() {
+    fn test_commit() {
         let caller = starknet::contract_address_const::<0x0>();
 
         let ndef = namespace_def();

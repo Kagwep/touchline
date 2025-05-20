@@ -138,8 +138,8 @@ pub mod tmatch {
             // Initialize match
             match_data.start_match(timestamp, turn_duration: TURN_DURATION);
 
-            let player_one_commit: CardMatchCommitHash =  CardMatchCommitHashTrait::new(match_id,player_id: match_data.home_player_id, card_hash: 0);
-            let player_two_commit: CardMatchCommitHash =  CardMatchCommitHashTrait::new(match_id,player_id: match_data.away_player_id, card_hash: 0);
+            let player_one_commit: CardMatchCommitHash =  CardMatchCommitHashTrait::new(match_id,player_id: match_data.home_player_id, card_hash: 0,sub_hash: 0);
+            let player_two_commit: CardMatchCommitHash =  CardMatchCommitHashTrait::new(match_id,player_id: match_data.away_player_id, card_hash: 0,sub_hash: 0);
 
             let player_one_action: TurnAction =  TurnActionTrait::new(
                 match_id,

@@ -15,7 +15,8 @@ pub trait IActions<T> {
         match_id:u128,
         card_id: u128,
         secret_key: felt252,
-        squad_id:u8
+        squad_id:u8,
+        sub_hash: u256
         );
     fn substitute_player(ref self: T,match_id:u128,prev_card: u128,card_id: u128,squad_id: u128);
     fn use_tactic_card(ref self: T,match_id:u128,card_id: u128);
@@ -28,7 +29,7 @@ pub trait IActions<T> {
 pub mod actions {
     use super::{
         IActions, Match,MatchTrait,TurnAction,CardMatchCommitHash,CardMatchCommitHashTrait,
-        compute_hash_on_card,CardMatchCommitReveal,PrevRoundWinner,MatchStatus,SquadPosition,
+        compute_hash_on_card,hash_card_sequential,CardMatchCommitReveal,PrevRoundWinner,MatchStatus,SquadPosition,position_to_felt,rarity_to_felt,
         SquadPositionTrait,TacticCardUse,Card,Rarity,Position,ActionType,SpecialCardUse,SquadCardUsed
     };
     use starknet::{ContractAddress, get_caller_address, get_block_timestamp};
@@ -113,7 +114,7 @@ pub mod actions {
                 assert(tmatch.current_turn  % 2 == 0, 'Not Your Turn');
             }
 
-            if tmatch.turn_deadline < (timestamp + TURN_DURATION){
+            if tmatch.turn_deadline < timestamp {
                 if tmatch.home_player_id == player {
                     tmatch.away_score += 1;
                    }else{
@@ -151,7 +152,8 @@ pub mod actions {
             match_id:u128,
             card_id: u128,
             secret_key: felt252,
-            squad_id:u8
+            squad_id:u8,
+            sub_hash: u256
         ) {
             // Get the address of the current caller, possibly the player's address.
 
@@ -173,11 +175,14 @@ pub mod actions {
 
               let player_card: Card = world.read_model(card_id);
 
-              let current_hash: u256 = compute_hash_on_card(player_card,secret_key);
+              //let re_ahs: felt252 = hash_card_sequential(sample,secret_key);// TODO: Why not work in dojo ?
 
               let mut prev_commit: CardMatchCommitHash = world.read_model((match_id,player));
 
-              assert(current_hash == prev_commit.card_hash, 'Wrong Card');
+              assert(prev_commit.card_hash == sub_hash, 'Wrong card');
+
+              prev_commit.sub_hash = sub_hash;
+
 
               let mut revealed_card:CardMatchCommitReveal = world.read_model((match_id,player));
 
@@ -259,20 +264,9 @@ pub mod actions {
                 world.write_model(@opp_tactic_card);
                 tmatch.status = MatchStatus::InProgress;
 
-                world.write_model(@SquadCardUsed{
-                    player_id: player,
-                    squad_id,
-                    match_id,
-                    card_id: player_card.id,
-                });
 
-                world.write_model(@SquadCardUsed{
-                    player_id: tmatch.away_player_id,
-                    squad_id,
-                    match_id,
-                    card_id: opp_card.id,
-                });
 
+               world.write_model(@prev_commit);
 
 
             }
@@ -301,6 +295,14 @@ pub mod actions {
                     tmatch.status = MatchStatus::Draw;
                 };                
             }
+
+            world.write_model(@SquadCardUsed{
+                    player_id: player,
+                    squad_id,
+                    match_id,
+                    card_id: player_card.id,
+                });
+
 
             world.write_model(@tmatch);
 
@@ -403,4 +405,29 @@ fn compute_hash_on_card(card: Card, secret_key: felt252) -> u256 {
 
     // Use poseidon hash span to compute the hash
     poseidon_hash_span(elements.span()).into()
+}
+
+fn hash_card_sequential(card: Card, secret_key: felt252) -> felt252 {
+    // Start hashing with the secret key
+    let mut state = PoseidonTrait::new();
+    state = state.update('moshi');
+    state = state.update('1747686439293');
+    state = state.update('Brun');
+    state = state.update('Bet');
+    state = state.update('3');
+    state = state.update('75');
+    state = state.update('75');
+    state = state.update('1');
+    state = state.update('0');
+    state = state.update('2025');
+
+    let hash = state.finalize();
+
+    // Finalize and return the hash
+    assert(hash != 0, 'Hashed to zero');
+
+    hash
+    
+
+    
 }

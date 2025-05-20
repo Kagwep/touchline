@@ -1,1 +1,1 @@
-pub const TURN_DURATION: u64 =60;
+pub const TURN_DURATION: u64 =300;

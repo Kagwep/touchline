@@ -5,7 +5,7 @@ import * as starknetH from '@scure/starknet';
 import { twMerge } from "tailwind-merge"
 import { Card, Squad, SquadPosition } from '../dojogen/models.gen';
 import { removeLeadingZeros } from './sanitizer';
-import { MatchStatus } from './types';
+import { ActionType, MatchStatus } from './types';
 
 const positionToInt = {
   "Goalkeeper": 0,
@@ -22,6 +22,22 @@ const rarityToInt = {
   "Legendary": 3,
   "Icon": 4
 };
+
+
+enum Position {
+  GOALKEEPER = 0,
+  DEFENDER = 1,
+  MIDFIELDER = 2,
+  FORWARD = 3
+}
+
+enum Rarity {
+  COMMON = 0,
+  RARE = 1,
+  EPIC = 2,
+  LEGENDARY = 3,
+  ICON=4
+}
 
 
 
@@ -71,6 +87,9 @@ function stringToBigint(str: string): bigint {
  */
 export function hashCard(card: Card, secretKey: string): bigint {
   // Prepare all values as separate elements for the hash function
+  const SECRET_KEY = stringToFelt(secretKey);
+
+  const SECRET_KEY_FELT = BigInt(SECRET_KEY);
   const elements: bigint[] = [
     SECRET_KEY_FELT,
     BigInt(card.id),
@@ -228,3 +247,15 @@ export function parseStarknetError(error: any): string {
 
     return error?.message || 'Unknown Starknet error occurred';
 }
+
+
+export const flipActionType = (actionType: string): string => {
+  if (actionType === ActionType.ATTACK) {
+    return ActionType.DEFEND;
+  } else if (actionType === ActionType.DEFEND) {
+    return ActionType.ATTACK;
+  } else {
+    // Return the original value if not Attack or Defend
+    return actionType;
+  }
+};

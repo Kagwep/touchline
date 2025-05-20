@@ -92,6 +92,7 @@ pub struct CardMatchCommitHash {
     #[key]
     pub player_id:  ContractAddress,
     pub card_hash: u256,
+    pub sub_hash: u256,
 
 }
 
@@ -183,8 +184,6 @@ pub impl MatchImpl of MatchTrait {
 
     #[inline(always)]
     fn advance_turn(ref self: Match, timestamp: u64, turn_duration: u64) {
-        assert(self.status == MatchStatus::InProgress, 'Match not in progress');
-        
         self.current_turn += 1;
         self.last_action_timestamp = timestamp;
         self.turn_deadline = timestamp + turn_duration;
@@ -347,12 +346,14 @@ pub impl CardMatchCommitHashImpl of CardMatchCommitHashTrait {
     fn new(
         match_id: u128,
         player_id: ContractAddress,
-        card_hash: u256
+        card_hash: u256,
+        sub_hash:u256
     ) -> CardMatchCommitHash {
         CardMatchCommitHash {
             match_id,
             player_id,
-            card_hash
+            card_hash,
+            sub_hash
         }
     }
 

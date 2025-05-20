@@ -16,3 +16,10 @@ export type CardWithPosition = Card & {
       PENDINGREVEAL:"PendingReveal"
     };
   
+export const ActionType = {
+  NONE: "None",
+  ATTACK: "Attack",
+  DEFEND: "Defend",
+  SPECIAL: "Special",
+  SUBSTITUTE: "Substitute"
+};

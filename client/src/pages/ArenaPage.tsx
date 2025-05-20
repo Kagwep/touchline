@@ -30,20 +30,13 @@ import GameState from '../utils/gamestate';
 import { useTouchlineStore } from '../utils/touchline';
 import WalletButton from '../components/WalletButton';
 import { ensureHexZeroPrefix, removeLeadingZeros } from '../utils/sanitizer';
-import { MatchStatus } from '../utils/types';
+import { ActionType, MatchStatus } from '../utils/types';
 import { Account, CairoCustomEnum, hash } from 'starknet';
-import { hashCard, parseStarknetError } from '../utils';
+import { flipActionType, hashCard, parseStarknetError } from '../utils';
 import { useDojo } from '../dojo/useDojo';
 import SelectActionTypeModal from '../components/SelectActionTypeModal';
 
 
-const ActionType = {
-  NONE: "None",
-  ATTACK: "Attack",
-  DEFEND: "Defend",
-  SPECIAL: "Special",
-  SUBSTITUTE: "Substitute"
-};
 
 
 const ArenaPage = () => {
@@ -71,6 +64,8 @@ const ArenaPage = () => {
 
   const specialCards = state.specialCards;
   const tacticalCards = state.tacticCards;
+
+  console.log(state.commits)
   
 
   // State for card actions
@@ -98,6 +93,8 @@ const ArenaPage = () => {
         return 'Draw';
       case MatchStatus.ABANDONED:
         return 'Match cancelled';
+      case MatchStatus.PENDINGREVEAL:
+        return 'Pending Reveal';
       default:
         return 'Unknown status';
     }
@@ -135,6 +132,7 @@ const ArenaPage = () => {
   const commitCardAction = async (card: any,last_action_type:any) => {
   try {
     const commitHash = hashCard(card, secret);
+    console.log(commitHash,card)
     const result = await (await client).actions.commit(
       account as Account,
       match_id,
@@ -180,7 +178,9 @@ const ArenaPage = () => {
      if (last_action_type as unknown as string === ActionType.NONE) {
       setIsActionModalOpen(true);
     } else {
-        commitCardAction(card,last_action_type)
+      const newAction =flipActionType(last_action_type as unknown as string);
+      console.log(newAction)
+        commitCardAction(card,newAction)
     }
     
 
@@ -206,13 +206,19 @@ const ArenaPage = () => {
     // (property) reveal: (snAccount: Account | AccountInterface, matchId: BigNumberish, cardId: BigNumberish, playerName: BigNumberish, team: BigNumberish, position: CairoCustomEnum, attack: BigNumberish, defense: BigNumberish, special: BigNumberish, rarity: CairoCustomEnum, season: BigNumberish, secretKey: BigNumberish, squadId: BigNumberish) => Promise<...>
     
     try {
+
+      console.log(card,secret)
+    const commitHash = hashCard(card, secret);
     
     const result = await (await client).actions.reveal(
       account as Account,
       match_id,
       card.id,
       secret,
-      squad_id
+      squad_id,
+      commitHash,
+
+    
     );
     
     if (result && result.transaction_hash) {
@@ -238,6 +244,8 @@ const ArenaPage = () => {
   const handleHomeClick = () => {
     set_game_state(GameState.MainMenu);
   };
+
+  console.log(state.used)
   
   // Render the formation positions visually
   const renderFormationPositions = (lineup, formation = 'F442', isHome = true) => {
@@ -299,13 +307,20 @@ const ArenaPage = () => {
             className="absolute transform -translate-x-1/2 -translate-y-1/2"
           >
             <div 
-              className={`w-12 h-12 rounded-full flex flex-col items-center justify-center cursor-pointer transition-all ${
-                lineup[index] ? `${isHome ? 'bg-green-700' : 'bg-green-800'} shadow-lg` : 
-                `${isHome ? 'bg-green-800' : 'bg-green-900'} bg-opacity-60`
+                className={`w-12 h-12 rounded-full flex flex-col items-center justify-center transition-all ${
+                !lineup[index] ? `${isHome ? 'bg-green-800' : 'bg-green-900'} bg-opacity-60` :
+                lineup[index] && state.isCardUsed(account.address,lineup[index].id, match_id, squad_id) ? 
+                  'bg-gray-500 opacity-50 cursor-not-allowed' : // Used card styling
+                  `${isHome ? 'bg-green-700' : 'bg-green-800'} shadow-lg cursor-pointer` // Available card styling
               }`}
-              onClick={() => lineup[index] && setSelectedCard(lineup[index])}
+                onClick={() => {
+                // Only allow click if card exists and hasn't been used
+                if (lineup[index] && !state.isCardUsed(account.address,lineup[index].id, match_id, squad_id)) {
+                  setSelectedCard(lineup[index]);
+                }
+              }}
             >
-              {lineup[index] ? (
+              {lineup[index]  ? (
                 <>
                   <div className={`w-10 h-10 rounded-full overflow-hidden border-2 ${isHome ? 'border-green-300' : 'border-green-500'}`}>
                     <img src={lineup[index].image || "/roro1.png"} alt={lineup[index].player_name} className="w-full h-full object-cover" />
@@ -400,7 +415,7 @@ const ArenaPage = () => {
               </div>
             </div>
             
-            {isYourCard && isParticipant && (
+            {isYourCard && isParticipant &&  state.isCardUsed(account.address,card.id, match_id, squad_id) && (
               <div className="mt-2 flex space-x-1">
                 <button 
                   className="flex-1 bg-blue-600 hover:bg-blue-500 py-1 rounded font-bold text-xs flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
@@ -563,7 +578,7 @@ const ArenaPage = () => {
           </div>
           
           {/* Home formation display */}
-          {renderFormationPositions(state.lineup, squad.formation as unknown as string, account.address === removeLeadingZeros(match.home_player_id))}
+          {renderFormationPositions(state.lineup, squad?.formation as unknown as string, account.address === removeLeadingZeros(match.home_player_id))}
           
           {/* Home special and tactical cards */}
           <div className="mt-4 grid grid-cols-2 gap-4">
@@ -676,11 +691,11 @@ const ArenaPage = () => {
                       </button>
                     </div>
                   </div>
-                  
+                  <p>{state.isCardUsed(account.address,selectedCard.id, match_id, squad_id).toString()},{selectedCard.id}</p>
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       onClick={() => handleCommit(selectedCard)}
-                      disabled={isCommitting || isRevealing || !secret}
+                      disabled={isCommitting || isRevealing || !secret || (selectedCard && state.isCardUsed(account.address,selectedCard.id, match_id, squad_id))}
                       className="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-lg font-bold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       {isCommitting ? (
@@ -695,10 +710,9 @@ const ArenaPage = () => {
                         </>
                       )}
                     </button>
-                    
                     <button
                       onClick={() => handleReveal(selectedCard)}
-                      disabled={isRevealing || isCommitting || !secret}
+                      disabled={isRevealing || isCommitting || !secret || (selectedCard && state.isCardUsed(account.address,selectedCard.id, match_id, squad_id))}
                       className="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg font-bold flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                     >
                       {isRevealing ? (

@@ -1312,8 +1312,8 @@
   },
   "contracts": [
     {
-      "address": "0x476d9c06b76f5d38e59922bbb2af0c6dbc75b91d94981a5d07ccdb87562635",
-      "class_hash": "0x51a690cbe0628138f694c23ea4ebe12172f02a33ddc302d797f62e8aad064b5",
+      "address": "0x76e1c44bd88151b18450eab827bc8bc4817888cca9a18f0860ff90408562759",
+      "class_hash": "0x62696e41c83570a44d161e80cd789a3b8053bca906663c70b99957fb2cb7f90",
       "abi": [
         {
           "type": "impl",
@@ -1453,6 +1453,10 @@
                 {
                   "name": "squad_id",
                   "type": "core::integer::u8"
+                },
+                {
+                  "name": "sub_hash",
+                  "type": "core::integer::u256"
                 }
               ],
               "outputs": [],
@@ -2318,8 +2322,8 @@
       ]
     },
     {
-      "address": "0x5310c1337316854f30b1ea4b8e57784609cb0e0103db0bbb1c5a3b59b9cb908",
-      "class_hash": "0x6cae34658235b9b55c4a57795eed6933464f824107228df581f323a4adfbd2d",
+      "address": "0x75d89f36a6b8590ba3ae03468c6257db786e3e977e7f22d8b2d7cfd46ff8e6c",
+      "class_hash": "0x37bc16d61e9589c6c39a775cb06bd2fb8edc162d1a9ef32b2decce22b77182a",
       "abi": [
         {
           "type": "impl",
@@ -2562,7 +2566,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x6287b0cac4d59ad888d21870461bef92775df91d93dd1ad3450cd44339238d2",
+      "class_hash": "0x7ffc6bd84804d30b7c2b3bac4779b5f52e85feb352c9b83322c45f20f1e4f61",
       "tag": "touchline-CardMatchCommitHash",
       "selector": "0x43f5d1bb2607a4a865929e1cb43531aa9172485afbd1fb505ab146099ad19bb"
     },
