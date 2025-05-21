@@ -24,7 +24,9 @@ pub struct SquadCardUsed {
     pub squad_id: u8,
     #[key]
     pub match_id: u128,
+    #[key]
     pub card_id: u128,
+    pub turn: u8,
 }
 
 

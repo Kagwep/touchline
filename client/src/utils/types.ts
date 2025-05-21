@@ -8,6 +8,7 @@ export type CardWithPosition = Card & {
   export const MatchStatus = {
       CREATED: "Created",
       WAITING_FOR_AWAY: "WaitingForAway",
+      WAITING_TO_START:"WaitingToStart",
       IN_PROGRESS: "InProgress",
       HOME_WIN: "HomeWin",
       AWAY_WIN: "AwayWin",

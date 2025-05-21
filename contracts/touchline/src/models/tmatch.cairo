@@ -16,7 +16,9 @@ pub struct Match {
     pub turn_deadline: u64,
     pub created_at: u64,
     pub last_action_type: ActionType,
-    pub last_action_timestamp: u64
+    pub last_action_timestamp: u64,
+    pub commit_count: u64,
+    pub reveal_count: u64,
 }
 
 
@@ -24,6 +26,7 @@ pub struct Match {
 pub enum MatchStatus {
     Created,
     WaitingForAWay,
+    WaitingToStart,
     InProgress,
     HomeWin,
     AwayWin,
@@ -167,14 +170,14 @@ pub impl MatchImpl of MatchTrait {
             turn_deadline: 0,
             created_at: time,
             last_action_type:ActionType::None,
-            last_action_timestamp: 0
+            last_action_timestamp: 0,
+            commit_count: 0,
+            reveal_count: 0,
         }
     }
 
     #[inline(always)]
     fn start_match(ref self: Match, timestamp: u64, turn_duration: u64) {
-        assert(self.status == MatchStatus::Created, 'Match already started');
-        
         self.status = MatchStatus::InProgress;
         self.current_turn = 1;
         self.last_action_timestamp = timestamp;

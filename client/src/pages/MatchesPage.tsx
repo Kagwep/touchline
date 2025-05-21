@@ -560,7 +560,7 @@ console.log(filteredMatches)
                         )}
                         
                         {/* Cancel button (only for the creator of Created matches) */}
-                        {match.status as unknown as string === MatchStatus.CREATED && 
+                        {match.status as unknown as string === MatchStatus.WAITING_TO_START && 
                         removeLeadingZeros(match.home_player_id) === account.address && (
                             <button
                             onClick={() => handleStartMatch({...match, match_id: matchId})}

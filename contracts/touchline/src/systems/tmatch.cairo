@@ -110,6 +110,8 @@ pub mod tmatch {
 
             tmatch.away_squad_id = away_squad_id;
 
+            tmatch.status = MatchStatus::WaitingToStart;
+
             world.write_model(@tmatch);
 
         }
@@ -132,8 +134,8 @@ pub mod tmatch {
                 'Only match players can start'
             );
             
-            // Verify match is in Created state
-            assert(match_data.status == MatchStatus::Created, 'Match already started');
+            // Verify  in start state
+            assert(match_data.status == MatchStatus::WaitingToStart, 'Match not Waiting');
             
             // Initialize match
             match_data.start_match(timestamp, turn_duration: TURN_DURATION);

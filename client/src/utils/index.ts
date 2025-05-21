@@ -185,6 +185,8 @@ export const getMatchStatusText = (status) => {
       return 'Match ended in draw';
     case MatchStatus.ABANDONED:
       return 'Match abandoned';
+    case MatchStatus.WAITING_TO_START:
+      return 'waiting to start';
     default:
       return 'Unknown status';
   }

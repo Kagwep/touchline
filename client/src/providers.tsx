@@ -22,30 +22,38 @@ export function StarknetProvider({ children, network }: StarknetProviderProps) {
   // Define session policies
   const policies: SessionPolicies = {
     contracts: {
-      [networkConstants.ARENA_ADDRESS]: {
+      [networkConstants.ACTIONS_ADDRESS]: {
         methods: [
-          { entrypoint: "create" },
-          { entrypoint: "join" },
-          { entrypoint: "transfer" },
-          { entrypoint: "leave" },
-          { entrypoint: "start" },
-          { entrypoint: "delete" },
-          { entrypoint: "kick" },
+          { entrypoint: "commit" },
+          { entrypoint: "reveal" },
+          { entrypoint: "substitute_player" },
+          { entrypoint: "use_tactic_card" },
         ],
       },
-      [networkConstants.NEXUS_ADDRESS]: {
+      [networkConstants.PLAYERS_ADDRESS]: {
         methods: [
-          { entrypoint: "deploy_forces" },
-          { entrypoint: "patrol" },
-          { entrypoint: "attack" },
-          { entrypoint: "defend" },
-          { entrypoint: "move_unit" },
-          { entrypoint: "stealth" },
-          { entrypoint: "heal" },
-          { entrypoint: "recon" },
-          { entrypoint: "force_end_player_turn" },
-          { entrypoint: "capture_flag" },
-          { entrypoint: "boost" },
+          { entrypoint: "create_card" },
+          { entrypoint: "update_stats" },
+          { entrypoint: "update_rarity" },
+          { entrypoint: "create_special_ability" },
+        ],
+      },
+      [networkConstants.SQUAD_ADDRESS]: {
+        methods: [
+          { entrypoint: "create_squad" },
+          { entrypoint: "change_formation" },
+          { entrypoint: "add_card_to_position" },
+          { entrypoint: "replace_card_to_position" },
+          { entrypoint: "remove_card_from_position" },
+          { entrypoint: "rename_squad" },
+          { entrypoint: "calculate_chemistry" },
+        ],
+      },
+      [networkConstants.TMATCH_ADDRESS]: {
+        methods: [
+          { entrypoint: "create_match" },
+          { entrypoint: "start_match" },
+          { entrypoint: "join_match" },
         ],
       },
     },
@@ -53,7 +61,7 @@ export function StarknetProvider({ children, network }: StarknetProviderProps) {
   
   const colorMode: ColorMode = "dark";
   const theme = "";
-  const namespace = "command_nexus";
+  const namespace = "touchline";
   
   const getChainIdForNetwork = (networkValue: Network) => {
     switch (networkValue) {

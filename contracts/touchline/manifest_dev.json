@@ -1312,8 +1312,8 @@
   },
   "contracts": [
     {
-      "address": "0x76e1c44bd88151b18450eab827bc8bc4817888cca9a18f0860ff90408562759",
-      "class_hash": "0x62696e41c83570a44d161e80cd789a3b8053bca906663c70b99957fb2cb7f90",
+      "address": "0x3c05bc4562d839d904a4207d785d3c9a8ee6ded2d458c32616b743b4a2d4056",
+      "class_hash": "0x6edffd210be8c38f1764632beaba2f7b265ca1847e693c38ab98bc4b10db993",
       "abi": [
         {
           "type": "impl",
@@ -2322,8 +2322,8 @@
       ]
     },
     {
-      "address": "0x75d89f36a6b8590ba3ae03468c6257db786e3e977e7f22d8b2d7cfd46ff8e6c",
-      "class_hash": "0x37bc16d61e9589c6c39a775cb06bd2fb8edc162d1a9ef32b2decce22b77182a",
+      "address": "0x2c58807b35829eeffd62f5dec6c6e86999abf4cba2f27ade99df8d177d6d5fa",
+      "class_hash": "0x23e739d6d860f4836800638d5fc03304036647e927693ce898a779f5b6f9674",
       "abi": [
         {
           "type": "impl",
@@ -2584,7 +2584,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x28cca40f8f44e5c767ca3a68aee9b12f6a7a05b23f6e6e7cd09c7f17e508b5",
+      "class_hash": "0x6229659e5ab409087041e47600bc5afc7f8a6e098295a36de606535c9cb9dfb",
       "tag": "touchline-Match",
       "selector": "0x12e08b84e48a920473d0539d29648405bb6dc5227987e7a4148d0da620e92ea"
     },
@@ -2620,7 +2620,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x6d4b09a4bc5bd669df4e608c14277f1aa0193fdd107b9a2c68d3b0a15c250b3",
+      "class_hash": "0x58035e242897bcff1951aaa7b9b62b5a7ce0fcd55dc072b619852b8768c0c14",
       "tag": "touchline-SquadCardUsed",
       "selector": "0x8691308345a0facd0aa60d8d60902316f9a06d9af1e20fc5b56f973f657a30"
     },
@@ -2664,7 +2664,7 @@
     },
     {
       "members": [],
-      "class_hash": "0x4912b1f21a512789cd7551b89378354e8f3cbf8579d7894f72a1f913b1fcd41",
+      "class_hash": "0x5df8ca3482a8266fffe7f8be229ca4ec52deae02799e93768d154726cfccf9d",
       "tag": "touchline-MatchEnded",
       "selector": "0xf83dd3e60bbf69e97617dff27ce62f49499ce2513dbc9c8a9d028c580514f4"
     },

@@ -94,7 +94,7 @@ export const useGameStore = create<GameState>((set,get) => ({
     setSquadCardsUsed: (used: SquadCardUsed) => set((state) => ({
         used: {
             ...state.used,
-            [`${used.squad_id}_${used.player_id}`]: used
+            [`${used.squad_id}_${used.player_id}_${used.card_id}`]: used
         }
     })),
 
@@ -218,56 +218,44 @@ export const useGameStore = create<GameState>((set,get) => ({
     loadUsedCards: (playerAddress: string, squadId: number, matchId: number) => {
     const state = get();
     
-    // Filter reveals to find cards that have been revealed (used) in this match
-    const revealEntries = Object.entries(state.reveals).filter(([key, reveal]) => 
-        removeLeadingZeros(reveal.player_id) === playerAddress && 
-        reveal.match_id.toString() === matchId.toString()
-    );
+    // // Filter reveals to find cards that have been revealed (used) in this match
+    // const revealEntries = Object.entries(state.reveals).filter(([key, reveal]) => 
+    //     removeLeadingZeros(reveal.player_id) === playerAddress && 
+    //     reveal.match_id.toString() === matchId.toString()
+    // );
     
-    // Process the reveals to track used cards
-    revealEntries.forEach(([key, reveal]) => {
-        // Create a SquadCardUsed record for each revealed card
-        const usedCard: SquadCardUsed = {
-            player_id: playerAddress,
-            squad_id: squadId,
-            match_id: matchId,
-            card_id: reveal.card_id
-        };
+    // // Process the reveals to track used cards
+    // revealEntries.forEach(([key, reveal]) => {
+    //     // Create a SquadCardUsed record for each revealed card
+    //     const usedCard: SquadCardUsed = {
+    //         player_id: playerAddress,
+    //         squad_id: squadId,
+    //         match_id: matchId,
+    //         card_id: reveal.card_id
+    //         turn: reveal.
+    //     };
         
-        // Save this used card record
-        state.setSquadCardsUsed(usedCard);
+    //     // Save this used card record
+    //     state.setSquadCardsUsed(usedCard);
         
-    });
+    // });
     
-    // You could also return a list of used card IDs if needed
-    return revealEntries.map(([key, reveal]) => reveal.card_id);
+    // // You could also return a list of used card IDs if needed
+    // return revealEntries.map(([key, reveal]) => reveal.card_id);
 },
 isCardUsed: (playerAddress: string, cardId: number, matchId: number, squadId: number) => {
     const state = get();
 
-    console.log('Checking if card is used:', {
-        playerAddress,
-        cardId,
-        matchId,
-        squadId,
-        usedCards: state.used
-    });
+
 
     const result = Object.values(state.used).some(usedCard => {
         const isUsed = 
-            usedCard.card_id === cardId &&
+            usedCard.card_id.toString() === cardId.toString() &&
             usedCard.match_id.toString() === matchId.toString() &&
-            usedCard.squad_id === squadId &&
-            removeLeadingZeros(usedCard.player_id) === playerAddress;
+            usedCard.squad_id.toString() === squadId.toString() &&
+            removeLeadingZeros(usedCard.player_id).toString() === playerAddress.toString();
 
-        console.log('Evaluating usedCard:', {
-            usedCard,
-            isMatch: isUsed,
 
-        },usedCard.card_id===cardId,
-            usedCard.match_id.toString(), matchId.toString(),usedCard.match_id.toString() === matchId.toString(),
-            usedCard.squad_id === squadId ,
-            removeLeadingZeros(usedCard.player_id)===playerAddress);
 
         return isUsed;
     });

@@ -105,9 +105,12 @@ pub mod actions {
                 world.read_model((match_id, tmatch.home_player_id))
             };
 
+            let prev_winner:PrevRoundWinner = world.read_model(match_id);
 
-            assert(opp_action.action_type != sub_action_type, 'Invalid Move');
-           
+            if prev_winner.player_id != player {
+                    assert(opp_action.action_type != sub_action_type, 'Invalid Move');
+            }
+            
             if tmatch.home_player_id == player {
                 assert(tmatch.current_turn  % 2 == 1, 'Not Your Turn');
             }else{
@@ -122,9 +125,7 @@ pub mod actions {
                    } 
             }
 
-            if tmatch.away_player_id == player {
-                tmatch.status = MatchStatus::PendingReveal;
-            }
+
 
             let mut card_commit_hash: CardMatchCommitHash =  world.read_model((match_id,player));
 
@@ -142,6 +143,12 @@ pub mod actions {
 
 
             tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
+
+            tmatch.commit_count += 1;
+
+            if tmatch.commit_count % 2 == 0  {
+                tmatch.status = MatchStatus::PendingReveal;
+            }
 
             // Write the new tmatch to the world.
             world.write_model(@tmatch);
@@ -189,87 +196,229 @@ pub mod actions {
 
               revealed_card.card_id = card_id;
 
-              if tmatch.away_player_id == player {
-                // Read all necessary game state
-                let prev_action: TurnAction = world.read_model((match_id, player));
-                let player_card: Card = world.read_model(card_id);
-                let opp_reveal: CardMatchCommitReveal = world.read_model((match_id, tmatch.home_player_id));
-                let opp_card: Card = world.read_model(opp_reveal.card_id);
-                let mut prev_winner: PrevRoundWinner = world.read_model(match_id);
-                let mut tactic_card:TacticCardUse = world.read_model((match_id,player));
-                let mut opp_tactic_card:TacticCardUse = world.read_model((match_id,tmatch.home_player_id));
-                let mut special_card:SpecialCardUse = world.read_model((match_id,player));
-                let mut op_special_card:SpecialCardUse = world.read_model((match_id,tmatch.home_player_id));
 
-                // Calculate tactic card bonuses
-                let (tactic_card_val_one, tactic_card_val_two) = if (tactic_card.valid && opp_tactic_card.valid) || (!tactic_card.valid && !opp_tactic_card.valid) {
-                    (0, 0) // Both have or neither have tactic cards - no advantage
-                } else if tactic_card.valid && !opp_tactic_card.valid {
-                    (5, 0) // Only player has tactic card
-                } else {
-                    (0, 5) // Only opponent has tactic card
-                };
+
+            //   if (tmatch.reveal_count + 1)  % 2 == 0 {
+
+            //     // Shadow original player with away_player_id since logic expects away player
+            //     let player = tmatch.away_player_id;
+            //     // Read all necessary game state
+            //     let prev_action: TurnAction = world.read_model((match_id, player));
+            //     let player_card: Card = world.read_model(card_id);
+            //     let opp_reveal: CardMatchCommitReveal = world.read_model((match_id, tmatch.home_player_id));
+            //     let opp_card: Card = world.read_model(opp_reveal.card_id);
+            //     let mut prev_winner: PrevRoundWinner = world.read_model(match_id);
+            //     let mut tactic_card:TacticCardUse = world.read_model((match_id,player));
+            //     let mut opp_tactic_card:TacticCardUse = world.read_model((match_id,tmatch.home_player_id));
+            //     let mut special_card:SpecialCardUse = world.read_model((match_id,player));
+            //     let mut op_special_card:SpecialCardUse = world.read_model((match_id,tmatch.home_player_id));
+
+            //     // Calculate tactic card bonuses
+            //     let (tactic_card_val_one, tactic_card_val_two) = if (tactic_card.valid && opp_tactic_card.valid) || (!tactic_card.valid && !opp_tactic_card.valid) {
+            //         (0, 0) // Both have or neither have tactic cards - no advantage
+            //     } else if tactic_card.valid && !opp_tactic_card.valid {
+            //         (5, 0) // Only player has tactic card
+            //     } else {
+            //         (0, 5) // Only opponent has tactic card
+            //     };
             
-                // Compare stats based on action type
-                let player_wins = match prev_action.action_type {
-                    ActionType::Attack => (player_card.attack + tactic_card_val_one) > (opp_card.defense + tactic_card_val_two),
-                    ActionType::Defend => (player_card.defense + tactic_card_val_one) > (opp_card.attack + tactic_card_val_two),
-                    _ => false, // Handle unexpected action types
-                };
+            //     // Compare stats based on action type
+            //     let player_wins = match prev_action.action_type {
+            //         ActionType::Attack => (player_card.attack + tactic_card_val_one) > (opp_card.defense + tactic_card_val_two),
+            //         ActionType::Defend => (player_card.defense + tactic_card_val_one) > (opp_card.attack + tactic_card_val_two),
+            //         _ => false, // Handle unexpected action types
+            //     };
                 
-                let tie = match prev_action.action_type {
-                    ActionType::Attack => (player_card.attack + tactic_card_val_one) == (opp_card.defense + tactic_card_val_two),
-                    ActionType::Defend => (player_card.defense + tactic_card_val_one) == (opp_card.attack + tactic_card_val_two),
-                    _ => false,
-                };
+            //     let tie = match prev_action.action_type {
+            //         ActionType::Attack => (player_card.attack + tactic_card_val_one) == (opp_card.defense + tactic_card_val_two),
+            //         ActionType::Defend => (player_card.defense + tactic_card_val_one) == (opp_card.attack + tactic_card_val_two),
+            //         _ => false,
+            //     };
 
 
 
             
-                // Update scores and winner based on outcome
-                if player_wins {
-                    tmatch.away_score += 1;
-                    tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
-                    prev_winner.player_id = player;
-                    if player_card.special == 2  {
-                        tmatch.away_score += 1;
-                        special_card.special_no +=1;
-                    }
-                } else if !tie {
-                    tmatch.home_score += 1;
-                    prev_winner.player_id = tmatch.home_player_id;
-                    if opp_card.special == 2  {
-                        tmatch.home_score += 1;
-                        op_special_card.special_no +=1;
-                    }
-                } else if tie && prev_winner.player_id == player {
-                    // On tie, previous winner gets advantage
-                    tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
-                }
+            //     // Update scores and winner based on outcome
+            //     if player_wins {
+            //         tmatch.away_score += 1;
+            //         if tmatch.current_turn % 2 == 0{
+            //             tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
+            //         }
+            //         prev_winner.player_id = player;
+            //         if player_card.special == 2  {
+            //             tmatch.away_score += 1;
+            //             special_card.special_no +=1;
+            //         }
+            //     } else if !tie {
+            //         tmatch.home_score += 1;
+            //         prev_winner.player_id = tmatch.home_player_id;
+            //         if tmatch.current_turn % 2 == 1{
+            //             tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
+            //         }
+            //         if opp_card.special == 2  {
+            //             tmatch.home_score += 1;
+            //             op_special_card.special_no +=1;
+            //         }
+            //     } else if tie && prev_winner.player_id == get_caller_address() {
+            //         // On tie, previous winner gets advantage
+            //         tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
+            //     }
 
-                if player_card.special == 3 {
-                    special_card.special_no +=1;
-                }
+            //     if player_card.special == 3 {
+            //         special_card.special_no +=1;
+            //     }
 
-                if opp_card.special == 3 {
-                    op_special_card.special_no +=1;
-                }
+            //     if opp_card.special == 3 {
+            //         op_special_card.special_no +=1;
+            //     }
 
-                tactic_card.valid = false;
-                opp_tactic_card.valid = false;
+            //     tactic_card.valid = false;
+            //     opp_tactic_card.valid = false;
+
+            //     tmatch.reveal_count += 1;
             
-                // Save updated state
-                world.write_model(@prev_winner);
-                world.write_model(@tactic_card);
-                world.write_model(@opp_tactic_card);
-                tmatch.status = MatchStatus::InProgress;
+            //     // Save updated state
+            //     world.write_model(@prev_winner);
+            //     world.write_model(@tactic_card);
+            //     world.write_model(@opp_tactic_card);
+            //     tmatch.status = MatchStatus::InProgress;
 
 
 
-               world.write_model(@prev_commit);
+            //    world.write_model(@prev_commit);
 
 
+            // }
+
+            let card_used: SquadCardUsed = world.read_model((player,squad_id,match_id,player_card.id));
+
+            if card_used.turn > 0 {
+                 if tmatch.home_player_id == player {
+                    tmatch.status = MatchStatus::AwayWin;
+                    tmatch.away_score = 3;
+                    tmatch.home_score = 0;
+                }else{
+                    tmatch.status  = MatchStatus::HomeWin;
+                    tmatch.home_score = 3;
+                    tmatch.away_score = 0;
+                }
             }
+
+            if (tmatch.reveal_count + 1) % 2 == 0 {
+                    // Determine active and passive players explicitly
+                    let (active_player, passive_player) = if tmatch.current_turn % 2 == 1 {
+                        (tmatch.home_player_id, tmatch.away_player_id) 
+                    } else {
+                        (tmatch.away_player_id, tmatch.home_player_id)  
+                    };
+
+                    // Read game state for active player
+                    let active_action: TurnAction = world.read_model((match_id, active_player));
+                    let active_card: Card = world.read_model(card_id); // Assuming card_id is for active player
+                    
+                    // Read game state for passive player
+                    let passive_reveal: CardMatchCommitReveal = world.read_model((match_id, passive_player));
+                    let passive_card: Card = world.read_model(passive_reveal.card_id);
+                    
+                    // Read other game state
+                    let mut prev_winner: PrevRoundWinner = world.read_model(match_id);
+                    let mut active_tactic: TacticCardUse = world.read_model((match_id, active_player));
+                    let mut passive_tactic: TacticCardUse = world.read_model((match_id, passive_player));
+                    let mut active_special: SpecialCardUse = world.read_model((match_id, active_player));
+                    let mut passive_special: SpecialCardUse = world.read_model((match_id, passive_player));
+
+                    // Calculate tactic card bonuses
+                    let (active_bonus, passive_bonus) = if (active_tactic.valid && passive_tactic.valid) || 
+                                                        (!active_tactic.valid && !passive_tactic.valid) {
+                        (0, 0) // Both have or neither have tactic cards - no advantage
+                    } else if active_tactic.valid && !passive_tactic.valid {
+                        (5, 0) // Only active player has tactic card
+                    } else {
+                        (0, 5) // Only passive player has tactic card
+                    };
+
+                    // Compare stats based on action type
+                    let active_wins = match active_action.action_type {
+                        ActionType::Attack => (active_card.attack + active_bonus) > (passive_card.defense + passive_bonus),
+                        ActionType::Defend => (active_card.defense + active_bonus) > (passive_card.attack + passive_bonus),
+                        _ => false, // Handle unexpected action types
+                    };
+                    
+                    let tie = match active_action.action_type {
+                        ActionType::Attack => (active_card.attack + active_bonus) == (passive_card.defense + passive_bonus),
+                        ActionType::Defend => (active_card.defense + active_bonus) == (passive_card.attack + passive_bonus),
+                        _ => false,
+                    };
+
+                    // Update scores and winner based on outcome
+                    if active_wins {
+                        // Award points to the correct player
+                        if active_player == tmatch.home_player_id {
+                            tmatch.home_score += 1;
+                            if active_card.special == 2 {
+                                tmatch.home_score += 1;
+                                active_special.special_no += 1;
+                            }
+                        } else {
+                            tmatch.away_score += 1;
+                            if active_card.special == 2 {
+                                tmatch.away_score += 1;
+                                active_special.special_no += 1;
+                            }
+                        }
+                        
+
+                        tmatch.advance_turn(timestamp, TURN_DURATION);
+
+                        
+                        prev_winner.player_id = active_player;
+                    } else if !tie {
+                        // Passive player wins
+                        if passive_player == tmatch.home_player_id {
+                            tmatch.home_score += 1;
+                            if passive_card.special == 2 {
+                                tmatch.home_score += 1;
+                                passive_special.special_no += 1;
+                            }
+                        } else {
+                            tmatch.away_score += 1;
+                            if passive_card.special == 2 {
+                                tmatch.away_score += 1;
+                                passive_special.special_no += 1;
+                            }
+                        }
+                        
+                        
+                        prev_winner.player_id = passive_player;
+
+                    } else if tie && prev_winner.player_id == player {
+                        // On tie, previous winner gets advantage if they are the caller
+                        tmatch.advance_turn(timestamp, TURN_DURATION);
+                    }
+
+                    // Process special cards
+                    if active_card.special == 3 {
+                        active_special.special_no += 1;
+                    }
+                    
+                    if passive_card.special == 3 {
+                        passive_special.special_no += 1;
+                    }
+
+                    // Reset tactic cards
+                    active_tactic.valid = false;
+                    passive_tactic.valid = false;
+
+
+                    // Save updated state
+                    world.write_model(@prev_winner);
+                    world.write_model(@active_tactic);
+                    world.write_model(@passive_tactic);
+                    world.write_model(@active_special);
+                    world.write_model(@passive_special);
+                    tmatch.status = MatchStatus::InProgress;
+                    world.write_model(@prev_commit);
+                }
               
             tmatch.advance_turn(timestamp, turn_duration: TURN_DURATION);
 
@@ -301,8 +450,9 @@ pub mod actions {
                     squad_id,
                     match_id,
                     card_id: player_card.id,
+                    turn: tmatch.current_turn
                 });
-
+            tmatch.reveal_count += 1;
 
             world.write_model(@tmatch);
 

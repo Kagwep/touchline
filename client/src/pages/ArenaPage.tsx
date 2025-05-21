@@ -132,7 +132,7 @@ const ArenaPage = () => {
   const commitCardAction = async (card: any,last_action_type:any) => {
   try {
     const commitHash = hashCard(card, secret);
-    console.log(commitHash,card)
+    console.log(commitHash,card,last_action_type)
     const result = await (await client).actions.commit(
       account as Account,
       match_id,
@@ -415,7 +415,7 @@ const ArenaPage = () => {
               </div>
             </div>
             
-            {isYourCard && isParticipant &&  state.isCardUsed(account.address,card.id, match_id, squad_id) && (
+            {isYourCard && isParticipant &&  !state.isCardUsed(account.address,card.id, match_id, squad_id) && (
               <div className="mt-2 flex space-x-1">
                 <button 
                   className="flex-1 bg-blue-600 hover:bg-blue-500 py-1 rounded font-bold text-xs flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
@@ -691,7 +691,7 @@ const ArenaPage = () => {
                       </button>
                     </div>
                   </div>
-                  <p>{state.isCardUsed(account.address,selectedCard.id, match_id, squad_id).toString()},{selectedCard.id}</p>
+    
                   <div className="grid grid-cols-2 gap-4">
                     <button
                       onClick={() => handleCommit(selectedCard)}

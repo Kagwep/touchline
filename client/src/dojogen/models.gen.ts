@@ -71,6 +71,7 @@ export interface SquadCardUsed {
 	squad_id: BigNumberish;
 	match_id: BigNumberish;
 	card_id: BigNumberish;
+	turn: BigNumberish;
 }
 
 // Type definition for `touchline::models::squad::SquadCardUsedValue` struct
@@ -162,6 +163,8 @@ export interface Match {
 	created_at: BigNumberish;
 	last_action_type: ActionTypeEnum;
 	last_action_timestamp: BigNumberish;
+	commit_count:  BigNumberish;
+    reveal_count:  BigNumberish;
 }
 
 // Type definition for `touchline::models::tmatch::MatchValue` struct
@@ -410,6 +413,7 @@ export type ActionTypeEnum = CairoCustomEnum;
 export const matchStatus = [
 	'Created',
 	'WaitingForAWay',
+	'WaitingToStart',
 	'InProgress',
 	'HomeWin',
 	'AwayWin',
@@ -545,6 +549,7 @@ export const schema: TouchlineSoccerSchemaType = {
 			squad_id: 0,
 			match_id: 0,
 			card_id: 0,
+			turn:0,
 		},
 		SquadCardUsedValue: {
 			card_id: 0,
@@ -632,6 +637,8 @@ export const schema: TouchlineSoccerSchemaType = {
 				Special: undefined,
 				Substitute: undefined, }),
 			last_action_timestamp: 0,
+		    commit_count: 0,
+            reveal_count:  0
 		},
 		MatchValue: {
 			home_player_id: "",
