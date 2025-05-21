@@ -85,7 +85,11 @@ const transformMatch = (rawData: any) => {
         turn_deadline: getPrimitiveValue(matchData.turn_deadline),
         created_at:getPrimitiveValue(matchData.created_ate),
         last_action_type: getPrimitiveValue(matchData.last_action_type),
-        last_action_timestamp: getPrimitiveValue(matchData.last_action_timestamp)
+        last_action_timestamp: getPrimitiveValue(matchData.last_action_timestamp),
+        commit_count:getPrimitiveValue(matchData.commit_count),
+        reveal_count:getPrimitiveValue(matchData.reveal_count),
+
+        
     };
 };
 
@@ -163,7 +167,8 @@ const transformSquadCardUsed = (rawData: any) => {
         player_id: getPrimitiveValue(squadCardUsedData.player_id),
         squad_id: getPrimitiveValue(squadCardUsedData.squad_id),
         match_id: getPrimitiveValue(squadCardUsedData.match_id),
-        card_id: getPrimitiveValue(squadCardUsedData.card_id)
+        card_id: getPrimitiveValue(squadCardUsedData.card_id),
+        turn:getPrimitiveValue(squadCardUsedData.turn),
     };
 };
 
