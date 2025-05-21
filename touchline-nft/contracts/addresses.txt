@@ -1,0 +1,5 @@
+Class hash declared:
+0x0197a5127a77661a9c0eb5ff94aca8e6914e95d1d0b9a3dbca660e5c35fd06ea
+
+Contract deployed:
+0x05747f99f9d1e37d798cfc2dde948839679e47a77081d24e3bf84635d16e05bb

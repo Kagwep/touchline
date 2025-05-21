@@ -1,0 +1,102 @@
+[
+  {
+    "name": "TouchlineNFTFactoryImpl",
+    "type": "impl",
+    "interface_name": "contracts::factory::ITouchlineNFTFactory"
+  },
+  {
+    "name": "core::integer::u256",
+    "type": "struct",
+    "members": [
+      {
+        "name": "low",
+        "type": "core::integer::u128"
+      },
+      {
+        "name": "high",
+        "type": "core::integer::u128"
+      }
+    ]
+  },
+  {
+    "name": "contracts::factory::ITouchlineNFTFactory",
+    "type": "interface",
+    "items": [
+      {
+        "name": "deploy_and_mint",
+        "type": "function",
+        "inputs": [
+          {
+            "name": "recipient",
+            "type": "core::starknet::contract_address::ContractAddress"
+          },
+          {
+            "name": "token_id",
+            "type": "core::integer::u256"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "(core::starknet::contract_address::ContractAddress, core::integer::u256)"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "name": "get_nft_count",
+        "type": "function",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::integer::u32"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "name": "constructor",
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "nft_class_hash",
+        "type": "core::starknet::class_hash::ClassHash"
+      }
+    ]
+  },
+  {
+    "kind": "struct",
+    "name": "contracts::factory::TouchlineNFTFactory::TouchlineNFTCreated",
+    "type": "event",
+    "members": [
+      {
+        "kind": "data",
+        "name": "nft_contract",
+        "type": "core::starknet::contract_address::ContractAddress"
+      },
+      {
+        "kind": "data",
+        "name": "token_id",
+        "type": "core::integer::u256"
+      },
+      {
+        "kind": "data",
+        "name": "recipient",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ]
+  },
+  {
+    "kind": "enum",
+    "name": "contracts::factory::TouchlineNFTFactory::Event",
+    "type": "event",
+    "variants": [
+      {
+        "kind": "nested",
+        "name": "TouchlineNFTCreated",
+        "type": "contracts::factory::TouchlineNFTFactory::TouchlineNFTCreated"
+      }
+    ]
+  }
+]
