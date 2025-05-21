@@ -5,7 +5,7 @@ import { MANIFEST_DEV, MANIFEST_MAINNET, MANIFEST_SEPOLIA } from '../dojoConfig'
 // Sepolia network constants
 export const SEPOLIA = {
     TORII_RPC_URL: "https://api.cartridge.gg/x/starknet/sepolia",
-    TORII_URL: "https://api.cartridge.gg/x/command-nexus-20/torii",
+    TORII_URL: "https://api.cartridge.gg/x/touchline-1/torii",
     ACTIONS_ADDRESS: "0x133ea5391240bd29d54a3e5bbc202de979b96f7d8b639078713dc770cfc0ded",
     PLAYERS_ADDRESS: "0xc833c02d5514cf7b11c429814f879fe6dbb22f6a941ca18446f60bbe8d6692",
     SQUAD_ADDRESS: "0x1490fbb97785b74c194a468c4cdf21e61136c1dbb36f5bb52e4f549bd22a08f",
