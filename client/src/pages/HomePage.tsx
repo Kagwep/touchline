@@ -5,6 +5,7 @@ import { useNetworkAccount } from '../context/WalletContex';
 import WalletButton from '../components/WalletButton';
 import { useTouchlineStore } from '../utils/touchline';
 import GameState from '../utils/gamestate';
+import { TouchlineNavigation } from './Navigation';
 
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -95,12 +96,26 @@ const HomePage = () => {
     set_game_state(GameState.Matches)
   }
 
+
+    const handleHomeClick = () => {
+    set_game_state(GameState.MainMenu)
+}
+
+
+    const handleTournamentClick = () => {
+    set_game_state(GameState.Tournament)
+}
+
+  const handleCommunityClick = () => {
+    set_game_state(GameState.Community)
+}
+
   // Quick action buttons data
   const quickActions = [
-    { icon: <Icon iconNode={soccerBall} className="w-5 h-5" />, label: "Play Now", color: "bg-green-500 hover:bg-green-400" },
-    { icon: <Trophy className="w-5 h-5" />, label: "Tournaments", color: "bg-blue-500 hover:bg-blue-400" },
-    { icon: <Calendar className="w-5 h-5" />, label: "Events", color: "bg-purple-500 hover:bg-purple-400" },
-    { icon: <Award className="w-5 h-5" />, label: "Rewards", color: "bg-amber-500 hover:bg-amber-400" }
+    { icon: <Icon iconNode={soccerBall} className="w-5 h-5" />, label: "Play Now", color: "bg-green-500 hover:bg-green-400", action: handleMatchClick},
+    { icon: <Trophy className="w-5 h-5" />, label: "Tournaments", color: "bg-blue-500 hover:bg-blue-400", action: handleTournamentClick },
+    { icon: <Calendar className="w-5 h-5" />, label: "Events", color: "bg-purple-500 hover:bg-purple-400",action: handleCommunityClick },
+    { icon: <Award className="w-5 h-5" />, label: "Rewards", color: "bg-amber-500 hover:bg-amber-400", action: handleTournamentClick }
   ];
 
   return (
@@ -112,85 +127,7 @@ const HomePage = () => {
       <div className="absolute top-20 right-20 w-64 h-64 bg-green-400 rounded-full filter blur-3xl opacity-10 animate-pulse"></div>
       <div className="absolute bottom-20 left-20 w-72 h-72 bg-emerald-400 rounded-full filter blur-3xl opacity-10 animate-pulse" style={{animationDelay: "1.5s"}}></div>
       
-      {/* Navigation */}
-      <nav className="p-4 relative z-10">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <div className="mr-2 text-green-300">
-              <Icon iconNode={soccerBall} className="w-8 h-8" />
-            </div>
-            <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-100">Touchline</span>
-          </div>
-          
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button onClick={toggleMenu} className="p-2">
-              <div className={`w-6 h-0.5 bg-white mb-1.5 transition-all ${isMenuOpen ? 'transform rotate-45 translate-y-2' : ''}`}></div>
-              <div className={`w-6 h-0.5 bg-white mb-1.5 ${isMenuOpen ? 'opacity-0' : 'opacity-100'}`}></div>
-              <div className={`w-6 h-0.5 bg-white ${isMenuOpen ? 'transform -rotate-45 -translate-y-2' : ''}`}></div>
-            </button>
-          </div>
-          
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8 items-center">
-            <a href="#" className="hover:text-green-300 transition-colors group relative">
-              Home
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-300 transition-all group-hover:w-full"></span>
-            </a>
-            <a href="#"
-            onClick={(e) => {
-              e.preventDefault(); // Prevents default anchor behavior
-              handleSquadClick(); // Call your handler
-            }}
-            className="hover:text-green-300 transition-colors group relative">
-              Squad
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-300 transition-all group-hover:w-full"></span>
-            </a>
-            <a href="#"
-            onClick={(e) => {
-              e.preventDefault(); // Prevents default anchor behavior
-              handleMatchClick(); // Call your handler
-            }}
-            className="hover:text-green-300 transition-colors group relative">
-              Matches
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-300 transition-all group-hover:w-full"></span>
-            </a>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault(); // Prevents default anchor behavior
-                handleMarketplaceClick(); // Call your handler
-              }}
-              className="hover:text-green-300 transition-colors group relative"
-            >
-              Marketplace
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-300 transition-all group-hover:w-full"></span>
-            </a>
-
-            <a href="#" className="hover:text-green-300 transition-colors group relative">
-              Tournaments
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-300 transition-all group-hover:w-full"></span>
-            </a>
-            <a href="#" className="hover:text-green-300 transition-colors group relative">
-              Community
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-300 transition-all group-hover:w-full"></span>
-            </a>
-            <WalletButton />
-          </div>
-        </div>
-        
-        {/* Mobile menu */}
-        <div className={`md:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-60' : 'max-h-0'}`}>
-          <div className="flex flex-col space-y-4 mt-4 px-2">
-            <a href="#" className="hover:text-green-300 py-2 border-b border-green-800">Home</a>
-            <a href="#" className="hover:text-green-300 py-2 border-b border-green-800">Squad</a>
-            <a href="#" className="hover:text-green-300 py-2 border-b border-green-800">Marketplace</a>
-            <a href="#" className="hover:text-green-300 py-2 border-b border-green-800">Tournaments</a>
-            <a href="#" className="hover:text-green-300 py-2 border-b border-green-800">Community</a>
-            <button className="bg-green-500 hover:bg-green-400 px-4 py-2 rounded-full font-bold w-full">0x12454</button>
-          </div>
-        </div>
-      </nav>
+      <TouchlineNavigation />
       
       {/* News ticker */}
       <div className="bg-green-800/50 border-y border-green-600/30 py-2 mb-6 relative overflow-hidden">
@@ -231,6 +168,7 @@ const HomePage = () => {
                 <button 
                   key={index} 
                   className={`${action.color} px-4 py-3 rounded-lg font-semibold transition-all flex flex-col items-center justify-center hover:shadow-lg hover:shadow-black/20 hover:-translate-y-1`}
+                  onClick={action.action}
                 >
                   {action.icon}
                   <span className="mt-1">{action.label}</span>

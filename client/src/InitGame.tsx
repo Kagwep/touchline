@@ -8,6 +8,9 @@ import SquadManagementPage from "./pages/Lobby";
 import MarketPlacePage from "./components/MarketPlace";
 import ArenaPage from "./pages/ArenaPage";
 import MatchesPage from "./pages/MatchesPage";
+import Tournament from "./pages/Tournaments";
+import CommunityComingSoon from "./pages/Community";
+import Community from "./pages/Community";
 
 const LoadingScreen = () => {
   const [loadingText, setLoadingText] = useState("CONNECTING TO STADIUM");
@@ -112,7 +115,8 @@ const InitGame = () => {
           {game_state === GameState.Squad && <SquadManagementPage />}
           {game_state === GameState.Arena && <ArenaPage  />}
           {game_state === GameState.Matches && <MatchesPage  />}
-          {/* {game_state === GameState.Game && <TouchlineSoccer />} */}
+          {game_state === GameState.Tournament && <Tournament />}
+          {game_state === GameState.Community && <Community />}
         </div>
       ) : (
         <LoadingScreen />

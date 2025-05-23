@@ -10,6 +10,7 @@ import GameState from '../utils/gamestate';
 import { useTouchlineStore } from '../utils/touchline';
 import { Account } from 'starknet';
 import { useDojo } from '../dojo/useDojo';
+import { TouchlineNavigation } from './Navigation';
 
 const SquadManagementPage = () => {
   // Formation options based on your contract
@@ -208,7 +209,6 @@ const placeCardInLineup = async (positionIndex, card) => {
     // Check if position is already occupied and we should replace
     if (currentLineup[newPositionIndex] !==null && isreplace) {
 
-      
       const currentCard = currentLineup[positionIndex];
 
       // Call API to replace card
@@ -474,33 +474,7 @@ const placeCardInLineup = async (positionIndex, card) => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-900 to-green-700 text-white">
       {/* Navigation */}
-      <nav className="p-4 bg-green-950">
-        <div className="container mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            <div className="mr-2 text-green-300">
-              <Home size={24} />
-            </div>
-            <a href="#"
-            onClick={(e) => {
-              e.preventDefault(); // Prevents default anchor behavior
-              handleHomeClick(); // Call your handler
-            }}
-            className="hover:text-green-300 transition-colors group relative">
-              Home
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-300 to-green-100 group-hover:w-full"></span>
-            </a>
-          </div>
-          
-          <div className="flex space-x-4 items-center">
-            <div className="bg-green-800 px-3 py-1 rounded-full flex items-center">
-              <span className="text-green-300 mr-2">
-                <User size={16} />
-              </span>
-              <WalletButton />
-            </div>
-          </div>
-        </div>
-      </nav>
+      <TouchlineNavigation />
       
       {/* Main Container */}
       <div className="container mx-auto px-4 py-6">

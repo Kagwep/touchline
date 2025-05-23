@@ -5,7 +5,9 @@ enum GameState {
   Squad,
   Market,
   Arena,
-  Matches
+  Matches,
+  Tournament,
+  Community
 }
 
 export default GameState;
