@@ -190,7 +190,7 @@ const LandingPage = ({ onStartGame }) => {
           </div>
           
           {/* Stats section */}
-          <div className="flex justify-center md:justify-start space-x-6 pt-6 mt-8 border-t border-green-500/20">
+          {/* <div className="flex justify-center md:justify-start space-x-6 pt-6 mt-8 border-t border-green-500/20">
             <div className="text-center">
               <div className="flex items-center justify-center mb-1">
                 <Users className="w-4 h-4 text-green-400 mr-1.5" />
@@ -212,7 +212,7 @@ const LandingPage = ({ onStartGame }) => {
               </div>
               <div className="text-green-300/70 text-sm">Tournaments</div>
             </div>
-          </div>
+          </div> */}
         </div>
         
         {/* Right side - Card Showcase */}

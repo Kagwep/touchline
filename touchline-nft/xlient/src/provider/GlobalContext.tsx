@@ -1,7 +1,7 @@
 // GlobalContext.tsx
 "use client";
 
-import React, { createContext, useContext, useState,type ReactNode } from 'react';
+import  { createContext, useContext, useState,type ReactNode } from 'react';
 import { AccountInterface } from 'starknet';
 
 interface GlobalContextType {

@@ -24,7 +24,8 @@ createRoot(document.getElementById('root')!).render(
         <GlobalProvider>
           <StarknetkitProvider>
              <App />
-              </StarknetkitProvider>
+             <Toaster />
+          </StarknetkitProvider>
       </GlobalProvider>
     </StarknetConfig>
   </StrictMode>,

@@ -5,7 +5,7 @@ import { FACTORY_ABI, FactoryAddress, provider } from './constants';
 import { parseInputAmountToUint256 } from './utils';
 import toast from 'react-hot-toast';
 import { StarknetkitConnectButton } from './provider/StarknetkitProvider';
-import { Contract, RpcProvider } from "starknet";
+import { Contract } from "starknet";
 
 // Define types for contract interactions
 type DeployAndMintResult = {
@@ -13,11 +13,7 @@ type DeployAndMintResult = {
   tokenId: string;
 };
 
-type WalletState = {
-  connected: boolean;
-  address: string | null;
-  chainId: string | null;
-};
+
 
 // Placeholder for actual Starknet contract interface
 // In a real implementation, you would use starknet.js or similar library
@@ -29,12 +25,7 @@ const StarknetNFTInterface: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [result, setResult] = useState<DeployAndMintResult | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [wallet, setWallet] = useState<WalletState>({
-    connected: false,
-    address: null,
-    chainId: null
-  });
-  const { account,chainId, setSelectedRoute } = useGlobalContext();
+  const { account,chainId } = useGlobalContext();
 
     const { sendAsync } = useSendTransaction({
     calls: undefined
@@ -89,13 +80,7 @@ const StarknetNFTInterface: React.FC = () => {
   }
 };
 
-  const disconnectWallet = (): void => {
-    setWallet({
-      connected: false,
-      address: null,
-      chainId: null
-    });
-  };
+
 
   const fetchNFTCount = async (): Promise<void> => {
     try {

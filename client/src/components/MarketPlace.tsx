@@ -344,7 +344,7 @@ const filteredCards = Object.values(state.cards).filter(card => {
               
               <div className="flex-grow flex justify-center items-center p-2">
                 <img 
-                  src={"/roro1.png"} 
+                  src={"/gen.png"} 
                   alt={card.player_name as string} 
                   className="h-24 rounded object-cover" 
                 />

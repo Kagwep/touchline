@@ -4,7 +4,7 @@ import React, { createContext, useContext, type ReactNode } from "react";
 import { useAccount, useConnect } from "@starknet-react/core";
 import { type StarknetkitConnector, useStarknetkitConnectModal } from "starknetkit";
 import { useGlobalContext } from "./GlobalContext";
-import { connect } from "starknetkit"
+
 
 interface StarknetkitProviderProps {
   children: ReactNode;
