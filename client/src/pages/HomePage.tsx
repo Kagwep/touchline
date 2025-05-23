@@ -6,32 +6,33 @@ import WalletButton from '../components/WalletButton';
 import { useTouchlineStore } from '../utils/touchline';
 import GameState from '../utils/gamestate';
 import { TouchlineNavigation } from './Navigation';
+import { getRandomPlayerImage } from '../utils';
 
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [featuredCards, setFeaturedCards] = useState([
     {
       id: 1,
-      name: "Lionel Messi",
-      team: "Inter Miami",
+      name: "Lion",
+      team: "Miami",
       rating: 92,
-      image: "/lo.png",
+      image: getRandomPlayerImage(),
       rarity: "legendary"
     },
     {
       id: 2,
-      name: "Cristiano Ronaldo",
-      team: "Al-Nassr",
+      name: "Ronado",
+      team: "AlN",
       rating: 90,
-      image: "/roro1.png",
-      rarity: "epic"
+      image: getRandomPlayerImage(),
+       rarity: "legendary"
     },
     {
       id: 3,
-      name: "Kylian Mbappé",
-      team: "Real Madrid",
+      name: "Kilian",
+      team: "Madrid",
       rating: 91,
-      image: "/mba.png",
+      image: getRandomPlayerImage(),
       rarity: "epic"
     }
   ]);

@@ -5,7 +5,7 @@ import { Account, addAddressPadding, CairoCustomEnum } from "starknet";
 import { useDojo } from '../dojo/useDojo';
 import { toast } from 'react-toastify';
 import { useAllEntities } from '../utils/touch';
-import { getPlayerSquads, parseStarknetError } from '../utils';
+import { getPlayerSquads, getRandomPlayerImage, parseStarknetError } from '../utils';
 import AddToSquadModal from './AddToSquadModalProps';
 import GameState from '../utils/gamestate';
 import { useTouchlineStore } from '../utils/touchline';
@@ -320,7 +320,7 @@ const filteredCards = Object.values(state.cards).filter(card => {
               
               <div className="flex-grow flex justify-center items-center p-2">
                 <img 
-                  src={"/gen.png"} 
+                  src={getRandomPlayerImage()} 
                   alt={card.player_name as string} 
                   className="h-24 rounded object-cover" 
                 />

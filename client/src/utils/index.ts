@@ -263,3 +263,7 @@ export const flipActionType = (actionType: string): string => {
 };
 
 
+export const getRandomPlayerImage = (): string => {
+  const randomNumber = Math.floor(Math.random() * 9) + 1;
+  return `/player${randomNumber}.png`;
+};

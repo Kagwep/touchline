@@ -32,7 +32,7 @@ import WalletButton from '../components/WalletButton';
 import { ensureHexZeroPrefix, removeLeadingZeros } from '../utils/sanitizer';
 import { ActionType, MatchStatus } from '../utils/types';
 import { Account, CairoCustomEnum, hash } from 'starknet';
-import { flipActionType, hashCard, parseStarknetError } from '../utils';
+import { flipActionType, getRandomPlayerImage, hashCard, parseStarknetError } from '../utils';
 import { useDojo } from '../dojo/useDojo';
 import SelectActionTypeModal from '../components/SelectActionTypeModal';
 import { TouchlineNavigation } from './Navigation';
@@ -324,7 +324,7 @@ const ArenaPage = () => {
               {lineup[index]  ? (
                 <>
                   <div className={`w-10 h-10 rounded-full overflow-hidden border-2 ${isHome ? 'border-green-300' : 'border-green-500'}`}>
-                    <img src={lineup[index].image || "/roro1.png"} alt={lineup[index].player_name} className="w-full h-full object-cover" />
+                    <img src={lineup[index].image || getRandomPlayerImage()} alt={lineup[index].player_name} className="w-full h-full object-cover" />
                   </div>
                   <div className={`absolute -bottom-4 ${isHome ? 'bg-green-700' : 'bg-green-800'} px-2 py-0.5 rounded text-xs max-w-20 truncate`}>
                     {lineup[index].player_name.toString().split(' ')[0]}
@@ -390,7 +390,7 @@ const ArenaPage = () => {
             
             <div className="flex-grow flex justify-center items-center p-2">
               <img 
-                src={card.image || "/roro1.png"} 
+                src={card.image || getRandomPlayerImage()} 
                 alt={card.player_name} 
                 className="h-16 rounded object-cover" 
               />

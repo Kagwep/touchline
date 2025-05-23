@@ -75,6 +75,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ onNetworkSelected }) 
               </p>
               <div className="mt-auto flex flex-col gap-2">
                 <button
+                  disabled
                   onClick={() => handleServerSelect("mainnet")}
                   className="mt-auto w-full py-4 bg-green-600 text-white font-medium tracking-wider 
                   border border-green-500/50 rounded-lg shadow-lg shadow-green-900/20

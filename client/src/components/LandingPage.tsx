@@ -12,26 +12,26 @@ const LandingPage = ({ onStartGame }) => {
   
   const featuredCards = [
     {
-      player: "Lionel Messi",
+      player: "Lionel",
       position: "Forward",
       rating: 94,
-      team: "Inter Miami",
+      team: "Miami",
       rarity: "Legendary",
       color: "from-purple-500 to-purple-700"
     },
     {
-      player: "Cristiano Ronaldo",
+      player: "Cristiano",
       position: "Forward",
       rating: 92,
-      team: "Al-Nassr",
+      team: "AlN",
       rarity: "Legendary",
       color: "from-yellow-500 to-yellow-700"
     },
     {
-      player: "Erling Haaland",
+      player: "Eling",
       position: "Striker",
       rating: 91,
-      team: "Manchester City",
+      team: "City",
       rarity: "Epic",
       color: "from-blue-500 to-blue-700"
     }

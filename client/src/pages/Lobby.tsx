@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, ChevronRight, Plus, Minus, Check, Zap, RotateCcw, Upload, Shield, Flame, Save, RefreshCw, User, Users, PlusCircle, Home, X } from 'lucide-react';
-import { getPlayerSquads, getSquadCards, parseStarknetError } from '../utils';
+import { getPlayerSquads, getRandomPlayerImage, getSquadCards, parseStarknetError } from '../utils';
 import SquadModal from '../components/SquadModal';
 import WalletButton from '../components/WalletButton';
 import { useNetworkAccount } from '../context/WalletContex';
@@ -449,7 +449,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                       {player ? (
                         <>
                           <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-white">
-                            <img src="{player.image}" alt={player.player_name as string} className="w-full h-full object-cover" />
+                            <img src={getRandomPlayerImage()} alt={player.player_name as string} className="w-full h-full object-cover" />
                           </div>
                           <div className="absolute -bottom-5 bg-green-900 px-2 py-0.5 rounded text-xs">
                             {(player.player_name as string).split(' ')[0]}
@@ -623,7 +623,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                               
                               <div className="flex-grow flex justify-center items-center p-2">
                                 <img 
-                                  src={"/roro1.png"} 
+                                  src={getRandomPlayerImage()} 
                                   alt={card.player_name as string} 
                                   className="h-24 rounded object-cover" 
                                 />
@@ -684,7 +684,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                 <div className="mb-4 bg-green-900 p-3 rounded-lg flex items-center justify-between">
                   <div className="flex items-center">
                     <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                      <img src={selectedCardForLineup.image} alt={selectedCardForLineup.name} className="w-full h-full object-cover" />
+                      <img src={getRandomPlayerImage()} alt={selectedCardForLineup.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
                       <div className="font-bold">{selectedCardForLineup.name}</div>
@@ -754,7 +754,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                                       
                                       <div className="flex-grow flex justify-center items-center p-2">
                                         <img 
-                                          src={"/roro1.png"} 
+                                          src={getRandomPlayerImage()} 
                                           alt={player.player_name as string} 
                                           className="h-24 rounded object-cover" 
                                         />
@@ -816,7 +816,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                           className="bg-green-800 hover:bg-green-700 p-2 rounded flex items-center cursor-pointer"
                         >
                           <div className="w-8 h-8 rounded-full overflow-hidden mr-2">
-                            <img src="/roro.png" alt={card.player_name as string} className="w-full h-full object-cover" />
+                            <img src={getRandomPlayerImage()} alt={card.player_name as string} className="w-full h-full object-cover" />
                           </div>
                           <div className="text-xs truncate">{card.player_name}</div>
                         </div>
@@ -885,7 +885,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                   
                   <div className="flex-grow flex justify-center items-center p-2">
                     <img 
-                      src={"/roro1.png"} 
+                      src={getRandomPlayerImage()} 
                       alt={card.player_name as string} 
                       className="h-24 rounded object-cover" 
                     />
@@ -967,7 +967,7 @@ const placeCardInLineup = async (positionIndex, card) => {
                   
                   <div className="flex-grow flex justify-center items-center p-2">
                     <img 
-                      src={"/roro1.png"} 
+                      src={getRandomPlayerImage()} 
                       alt={card.player_name as string } 
                       className="h-24 rounded object-cover" 
                     />
