@@ -5,7 +5,7 @@ import { useNetworkAccount } from '../context/WalletContex';
 import { useDojo } from '../dojo/useDojo';
 import { Account } from 'starknet';
 import { toast } from 'react-toastify';
-import { parseStarknetError } from '../utils';
+import { getRandomPlayerImage, parseStarknetError } from '../utils';
 
 interface AddToSquadModalProps {
   isOpen: boolean;
@@ -149,7 +149,7 @@ const AddToSquadModal = ({ isOpen, onClose, card, squads }: AddToSquadModalProps
         <div className="p-4">
           <div className="mb-4 flex items-center gap-3 bg-green-900/30 p-3 rounded-lg">
             <div className="h-12 w-12 rounded bg-green-800 flex items-center justify-center overflow-hidden">
-              <img src="/api/placeholder/48/48" alt="Card" className="object-cover" />
+              <img src={getRandomPlayerImage()} alt="Card" className="object-cover" />
             </div>
             <div>
               <div className="font-bold text-white">{card.player_name}</div>
