@@ -155,18 +155,18 @@ export type Network =
 
 
 
-  export const tutorialContent = [
+export const tutorialContent = [
     {
         gType: 'section',
         data: {
-            title: 'Welcome to Touchline Soccer',
-            content: 'Learn how to collect, manage and play with your football cards in this comprehensive guide.'
+            title: 'Welcome to Touchline',
+            content: 'The ultimate digital football card game built on Starknet. Collect player cards, build your squad, and compete in strategic matches to become a legendary manager.'
         }
     },
     {
         gType: 'image',
         data: {
-            url: '/images/touchline_intro.png',
+            url: '/touchline_intro.PNG',
             width: '400px',
             height: '225px'
         }
@@ -175,13 +175,13 @@ export type Network =
         gType: 'section',
         data: {
             title: 'Wallet Connection',
-            content: 'Before starting gameplay, you need to connect your wallet to access all features and store your player cards and in-game assets.'
+            content: 'Connect your Starknet wallet to access all features, store your player cards, and participate in matches. Your wallet will hold your NFT cards and manage transactions.'
         }
     },
     {
         gType: 'image',
         data: {
-            url: '/images/wallet_connect.PNG',
+            url: '/wallet_connect.png',
             width: '400px',
             height: '225px'
         }
@@ -190,29 +190,34 @@ export type Network =
         gType: 'section',
         data: {
             title: 'Connecting Your Wallet',
-            content: 'Follow these steps to connect your wallet:\n\n1. Click the "Verify Club Ownership" button in the top-right corner\n2. Confirm the connection request in your wallet\n3. Once connected, your wallet address will appear in the header as your Manager ID'
-        }
-    },
-    {
-        gType: 'video',
-        data: {
-            url: 'https://res.cloudinary.com/dydj8hnhz/video/upload/v1745601573/pjmbbkndbs26amb3uzmy.mp4',
-            title: 'Wallet Connection Tutorial',
-            width: '560px',
-            height: '315px'
+            content: 'Follow these steps to connect your Starknet wallet:\n\n1. Click the wallet address in the top-right corner\n2. Select your preferred Starknet wallet (ArgentX, Braavos, etc.)\n3. Confirm the connection request in your wallet\n4. Once connected, your address will be displayed as "0x3d...fae3"'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Club Manager Integration',
-            content: 'The Club Manager interface allows you to manage your player cards and connect your wallet seamlessly:'
+            title: 'Navigation Menu',
+            content: 'Use the top navigation to access different game sections:\n\n• Home: Main dashboard and game overview\n• Squad: Manage your player cards and formations\n• Matches: Find and join competitive matches\n• Marketplace: Buy, sell, and trade player cards\n• Tournaments: Participate in competitive events\n• Community: Connect with other managers'
+        }
+    },
+    {
+        gType: 'section',
+        data: {
+            title: 'Getting Started',
+            content: 'Your journey begins with the main action buttons:\n\n• Play Now: Jump into a quick match\n• Tournaments: Enter competitive events\n• Events: Join special limited-time competitions\n• Rewards: Claim your earned prizes\n\nClick "Start Playing" or "New Game" to begin your manager career.'
+        }
+    },
+    {
+        gType: 'section',
+        data: {
+            title: 'Squad Management',
+            content: 'The Squad section is where you build your team. Here you can create and manage multiple squads with different formations and strategies.'
         }
     },
     {
         gType: 'image',
         data: {
-            url: '/images/club_manager.png',
+            url: '/squad.PNG',
             width: '400px',
             height: '225px'
         }
@@ -220,28 +225,42 @@ export type Network =
     {
         gType: 'section',
         data: {
-            title: 'Using the Club Manager',
-            content: 'The Club Manager provides these wallet functions:\n\n• Card Collection: View and organize your player cards\n• Token Balance: Check your transfer budget\n• Transaction History: Review past transfers\n• Disconnect: Safely disconnect your wallet when finished'
+            title: 'Creating Your First Squad',
+            content: 'To create a squad:\n\n1. Navigate to the Squad section\n2. Click "Create Squad" or the + button\n3. Choose a squad name\n4. Select your preferred formation (4-4-2, 4-3-3, 3-5-2, 5-3-2, 3-4-3)\n5. Your squad will be assigned a unique ID for identification'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Wallet Security',
-            content: 'Important security tips:\n\n• Never share your wallet seed phrase\n• Always verify transaction details before signing\n• Disconnect your wallet when not playing\n• Use a dedicated gaming wallet separate from your main holdings'
+            title: 'Formation Types',
+            content: 'Each formation offers different tactical advantages:\n\n• F442: Balanced 4-4-2 formation with strong midfield\n• F433: Attacking 4-3-3 with three forwards\n• F352: 3-5-2 with wing-backs for width\n• F532: Defensive 5-3-2 with extra defenders\n• F343: Ultra-attacking 3-4-3 formation\n\nChoose based on your playing style and available players.'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Basic Controls',
-            content: 'Your manager panel contains several important buttons: Team Selection (bottom), Training and Boost (center), and a Tactics guide (top). Each serves a crucial function in managing your squad.'
+            title: 'Player Cards & Positions',
+            content: 'Player cards have four main positions:\n\n• Goalkeeper: Last line of defense\n• Defender: Protect your goal and start attacks\n• Midfielder: Control the game\'s tempo\n• Forward: Score goals and create chances\n\nEach player has Attack, Defense, and Special stats that determine their effectiveness.'
+        }
+    },
+    {
+        gType: 'section',
+        data: {
+            title: 'Card Rarity System',
+            content: 'Player cards come in five rarity levels:\n\n• Common: Basic players with standard abilities\n• Rare: Above-average players with good stats\n• Epic: High-quality players with strong abilities\n• Legendary: Elite players with exceptional stats\n• Icon: Ultimate players with maximum potential\n\nHigher rarity cards have better stats and special abilities.'
+        }
+    },
+    {
+        gType: 'section',
+        data: {
+            title: 'Marketplace',
+            content: 'The Marketplace is where you acquire new player cards to strengthen your squad.'
         }
     },
     {
         gType: 'image',
         data: {
-            url: '/images/manager_panel.png',
+            url: '/marketplace.PNG',
             width: '400px',
             height: '225px'
         }
@@ -249,210 +268,116 @@ export type Network =
     {
         gType: 'section',
         data: {
-            title: 'Team Selection',
-            content: 'The large green circle at the bottom is your Team Selection button. Click it to place new players in your starting lineup. This is your primary way of building your squad.'
+            title: 'Acquiring Players',
+            content: 'In the Marketplace you can:\n\n• Browse available player cards\n• View detailed player statistics and abilities\n• Purchase cards using in-game currency or tokens\n• Add players directly to your squad\n• Check player rarity and special abilities before buying'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Player Management',
-            content: 'In the center panel, you have two key abilities:\n\n• Training (♥): Select a player and press Training to improve their fitness\n• Boost (⚡): Increases player energy for special moves\n\nRemember: Every match consumes energy, so manage your resources wisely!'
+            title: 'Squad Building Strategy',
+            content: 'Build a balanced squad by:\n\n• Filling all 11 starting positions according to your formation\n• Having backup players for substitutions\n• Balancing Attack, Defense, and Special stats across positions\n• Considering player chemistry - same team players work better together\n• Planning for different tactical situations'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Help & Information',
-            content: 'The "i" button at the top right will open this guide anytime you need to review the controls. Use it to refresh your memory about game mechanics and player management.'
-        }
-    },
-    {
-        gType: 'image',
-        data: {
-            url: '/images/player_actions.png',
-            width: '400px',
-            height: '100px'
+            title: 'Match System',
+        content: 'Touchline features a strategic turn-based match system where you compete against other managers in real-time.'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'NFT Card Integration',
-            content: 'With your wallet connected, you can:\n\n• Import NFT player cards from your wallet collection\n• Deploy rare player cards with special abilities\n• Earn new player cards through match achievements\n• Trade cards with other managers on the transfer market'
-        }
-    },
-    {
-        gType: 'video',
-        data: {
-            url: 'https://www.youtube.com/embed/nft_player_cards',
-            title: 'NFT Player Card Tutorial',
-            width: '560px',
-            height: '315px'
+            title: 'Creating and Joining Matches',
+            content: 'To participate in matches:\n\n• Create Match: Start a new match with your selected squad\n• Join Match: Enter an existing match created by another manager\n• Choose your squad ID when creating or joining\n• Wait for your opponent to join (for created matches)\n• Match begins once both managers are ready'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Player Positions',
-            content: 'Players can be assigned different positions:\n\n• Attack: Strikers and Forwards focused on scoring\n• Midfield: Central players who connect defense and attack\n• Defense: Players who protect your goal\n• Goalkeeper: Last line of defense'
+            title: 'Match Mechanics - Commit/Reveal System',
+            content: 'Matches use a secure commit-reveal system:\n\n1. COMMIT Phase: Choose your action and submit a hidden commitment\n   • Select Attack, Defend, Special, or Substitute\n   • Your choice is encrypted until the reveal phase\n\n2. REVEAL Phase: Both players reveal their actions simultaneously\n   • Actions are resolved based on the combination\n   • Results determine the outcome of that turn'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Formation Selection',
-            content: 'To set your formation:\n1. Select "Formations" tab\n2. Browse available formations (4-3-3, 4-4-2, etc.)\n3. Click to select your preferred formation\n\nIMPORTANT: Each formation has strengths and weaknesses. Match your formation to your playing style and opponent tactics.'
-        }
-    },
-    {
-        gType: 'image',
-        data: {
-            url: '/images/formation_screen.png',
-            width: '400px',
-            height: '225px'
+            title: 'Action Types',
+            content: 'Four main actions available during matches:\n\n• Attack: Focus on scoring goals and creating chances\n• Defend: Strengthen your defense and block opponent attacks\n• Special: Use special abilities and tactical cards\n• Substitute: Replace players during the match for tactical advantages\n\nChoose your actions based on your strategy and opponent\'s likely moves.'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Club Badges',
-            content: ''
-        }
-    },
-    {
-        gType: 'image',
-        data: {
-            url: '/images/player_info.png',
-            width: '400px',
-            height: '225px'
+            title: 'Special Abilities & Tactic Cards',
+            content: 'Enhanced gameplay through special features:\n\n• Special Abilities: Unique powers attached to high-rarity cards\n• Tactic Cards: Strategic cards that provide temporary advantages\n• Player Substitutions: Swap players mid-match for tactical changes\n• Chemistry Bonuses: Team synergy affects overall performance'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Player Information Display',
-            content: 'Click on any player card to view its detailed information. The info panes show crucial stats about your selected player:'
+            title: 'Match Flow',
+            content: 'A typical match progresses as follows:\n\n1. Pre-match: Select your squad and formation\n2. Match Start: Both managers commit their first actions\n3. Turn Resolution: Actions are revealed and resolved\n4. Ongoing Turns: Continue committing and revealing actions\n5. Match End: Final score determines the winner\n6. Rewards: Winner receives prizes and progression'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Player Stats',
-            content: '• Fitness: Current player fitness level\n• Energy: Available energy for matches\n• Shooting: Goal scoring ability\n• Passing: Ball distribution accuracy\n• Defending: Tackle and interception ability\n• Card ID: Unique identifier\n• Manager: Owner of the card\n• Position: Current player position (ST/MF/DF/GK)'
+            title: 'Advanced Squad Management',
+            content: 'Optimize your team performance:\n\n• Calculate Chemistry: Check how well your players work together\n• Formation Changes: Adapt your formation mid-season\n• Player Positioning: Move players to optimize their effectiveness\n• Squad Rotation: Manage player fatigue and form\n• Backup Plans: Have substitute strategies ready'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Live Updates',
-            content: 'The information panes update in real-time as you select different player cards or when player stats change during matches. Keep an eye on fitness levels - they affect your player\'s performance!'
-        }
-    },
-    {
-        gType: 'image',
-        data: {
-            url: '/images/manager_bar.png',
-            width: '1200px',
-            height: '40px'
+            title: 'Blockchain Integration',
+            content: 'Touchline leverages Starknet  for:\n\n• True ownership of player card NFTs\n• Secure match results and fair play\n• Transparent trading and marketplace transactions\n• Permanent record of achievements and statistics\n• Cross-platform compatibility and portability'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Manager Information',
-            content: 'The top bar shows your manager status. From left to right:\n\n• Manager Name\n• Home Club (with badge)\n• Manager Level\n• Trophies Count\n• Available Boosts\n• Points\n• Available Tactics\n• Match Status Button'
+            title: 'Player Development',
+            content: 'Improve your cards over time:\n\n• Update Stats: Enhance Attack, Defense, and Special attributes\n• Rarity Upgrades: Increase card rarity through gameplay\n• Special Abilities: Unlock and create new abilities\n• Seasonal Updates: Cards can be updated with new seasons\n• Performance Tracking: Monitor your players\' match statistics'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Wallet Balance Display',
-            content: 'Next to your manager info, you\'ll see your wallet status including:\n\n• Connected wallet address (abbreviated)\n• Transfer budget balance\n• Special item count\n'
+            title: 'Tournaments & Competition',
+        content: 'Compete in organized tournaments for greater rewards and recognition. Tournament play offers the highest stakes and best prizes in Touchline.'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Tactics System',
-            content: 'Tactics are your action points for team control:\n\n• Start with 8 tactics in your first match half\n• Renewed to 3 tactics in subsequent halves\n• Each tactic type (Press/Counter/Possession/Defensive) can only be used once before switching\n• Plan your actions carefully - tactics are precious resources!'
+            title: 'Winning Strategies',
+            content: 'Master these key concepts:\n\n• Squad Balance: Don\'t neglect any position\n• Chemistry Management: Team synergy is crucial\n• Formation Flexibility: Adapt to different opponents\n• Resource Management: Use special abilities wisely\n• Market Timing: Buy low, sell high in the marketplace\n• Practice: Regular matches improve your tactical skills'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Match Management',
-            content: 'The End Half button indicates your match status:\n\n• Green: It\'s your turn to make tactical decisions\n• Red: Opponent\'s turn - plan your next moves\n\nStrategic Tip: Always monitor your players\' fitness and energy levels when planning tactics. Efficient tactical usage is key to victory!'
+            title: 'Season 5 Cards',
+            content: 'New Season 5 cards are now available in the store! These cards feature:\n\n• Updated player statistics\n• New special abilities\n• Enhanced artwork and designs\n• Seasonal bonus attributes\n• Limited-time availability\n\nCheck the marketplace regularly for new releases.'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Match Mechanics',
-            content: 'Player positions affect performance:\n\n• Attack Bonuses:\n  - Striker position: +10 shooting\n  - Inside Forward: +15 shooting (highest)\n  - Winger position: +5 shooting\n\n• Defense Bonuses:\n  - Center Back position: +15 defense (highest)\n  - Full Back position: +5 defense\n  - Defensive Midfielder: +10 defense'
-        }
-    },
-    {
-        gType: 'image',
-        data: {
-            url: '/images/match_play.png',
-            width: '400px',
-            height: '225px'
+            title: 'Tips for New Managers',
+        content: 'Start your Touchline journey successfully:\n\n• Begin with a solid defensive formation\n• Focus on building chemistry over individual star players\n• Learn the commit-reveal system through practice matches\n• Study your opponents\' tendencies and adapt\n• Invest in a balanced squad rather than just forwards\n• Save resources for strategic moments in important matches'
         }
     },
     {
         gType: 'section',
         data: {
-            title: 'Transfer Market Integration',
-            content: 'Access the in-game transfer market through your Club Manager to:\n\n• Purchase premium player cards with connected wallet\n• Sell unwanted cards for tokens\n• Trade cards with other managers\n• View current market trends and player values'
-        }
-    },
-    {
-        gType: 'video',
-        data: {
-            url: 'https://www.youtube.com/embed/transfer_market_tutorial',
-            title: 'Transfer Market & Trading Tutorial',
-            width: '560px',
-            height: '315px'
-        }
-    },
-    {
-        gType: 'section',
-        data: {
-            title: 'Victory Conditions',
-            content: 'Win the match by achieving either:\n\n• Score more goals than your opponent\n• Dominate possession and shots on target for points victory\n\nStrategize your approach based on your squad strengths!'
-        }
-    },
-    {
-        gType: 'section',
-        data: {
-            title: 'Points & Tactics',
-            content: 'Points earned vary by tactical approach:\n\nHighest Reward Actions:\n• Goals from counterattacks: 40 points\n• Set piece goals: 35 points\n• Open play goals: 30 points\n\nBonus Points For:\n• Clean sheets: 40 points\n• Possession dominance: 30 points\n• Shots on target: 25 points\n\nTip: Counter-attacking offers the highest risk/reward ratio!'
-        }
-    },
-    {
-        gType: 'section',
-        data: {
-            title: 'Manager Levels & Progression',
-            content: 'Earn points to progress through manager levels:\n\n• Amateur → Semi-Pro → Professional → Elite\n• Master → Legend → Hall of Fame\n\nEarn points through match wins and tournament success!'
-        }
-    },
-    {
-        gType: 'section',
-        data: {
-            title: 'Boost System',
-            content: 'Boost resource management:\n\n• Earn boost by:\n  - Winning matches\n  - Tournament progress\n\n• Spend boost on:\n  - Training players (20 boost)\n  - Boosting player energy (20 boost)\n\nStrategic tip: Save boosts for critical matches in tournaments!'
-        }
-    },
-    {
-        gType: 'section',
-        data: {
-            title: 'Wallet Rewards',
-            content: 'Earn blockchain rewards directly to your connected wallet:\n• Rare player card NFTs for completing achievements\n• Season rewards for consistent participation\n• Special event rewards during tournaments'
+            title: 'Getting Help',
+            content: 'Need assistance? Access support through:\n\n• Community section for player discussions\n• In-game help buttons (look for "i" icons)\n• Official documentation and guides\n• Community forums and Discord\n• Customer support for technical issues\n\nWelcome to the pitch, manager. Time to build your legacy!'
         }
     }
 ];
-
 
 
 export const getElementStoreState = () => {
