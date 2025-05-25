@@ -113,13 +113,10 @@ const StarknetNFTInterface: React.FC = () => {
       setResult(null);
       setError(null);
       
-      const { contractAddress, tokenId } = 
-        await mockTouchlineNFTFactory.deployAndMint(recipient);
       
-      setResult({
-        contractAddress,
-        tokenId
-      });
+      await mockTouchlineNFTFactory.deployAndMint(recipient);
+      
+
       
       // Refresh NFT count after minting
       await fetchNFTCount();
@@ -215,10 +212,6 @@ const StarknetNFTInterface: React.FC = () => {
         {result && (
           <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-md">
             <h3 className="font-medium text-green-800">Successfully Deployed and Minted!</h3>
-            <div className="mt-2 text-sm text-green-700">
-              <p><span className="font-medium">Contract Address:</span> {result.contractAddress}</p>
-              <p><span className="font-medium">Token ID:</span> {result.tokenId}</p>
-            </div>
           </div>
         )}
         

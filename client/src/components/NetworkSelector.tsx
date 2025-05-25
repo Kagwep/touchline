@@ -84,7 +84,7 @@ const NetworkSelector: React.FC<NetworkSelectorProps> = ({ onNetworkSelected }) 
                 >
                   CONNECT
                 </button>
-                <p className="text-xs text-green-300/70 text-center">Official tournaments available</p>
+                <p className="text-xs text-green-300/70 text-center">Not Available</p>
               </div>
             </div>
           </div>
