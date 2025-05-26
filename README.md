@@ -2,7 +2,7 @@
 
 **The Ultimate Digital Football Card Game on StarkNet**
 
-Touchline is an ochain-based football card game that combines the thrill of collecting digital player cards with strategic squad building and competitive gameplay. Built on StarkNet using the Dojo framework, Touchline offers true ownership of your digital assets and transparent, provably fair gameplay.
+Touchline is a fully  ochain-based football card game built on Dojo that combines the thrill of collecting digital player cards with strategic squad building and competitive gameplay. Built on StarkNet using the Dojo framework, Touchline offers true ownership of your digital assets and transparent, provably fair gameplay.
 
 ## 🎮 Game Overview
 

@@ -390,7 +390,7 @@ const ArenaPage = () => {
             
             <div className="flex-grow flex justify-center items-center p-2">
               <img 
-                src={card.image || getRandomPlayerImage()} 
+                src={getRandomPlayerImage()} 
                 alt={card.player_name} 
                 className="h-16 rounded object-cover" 
               />
@@ -649,7 +649,7 @@ const ArenaPage = () => {
                   </div>
                   
                   <div className="mb-4">
-                    <label className="block text-green-300 text-sm mb-1">Secret Key</label>
+                    <label className="block text-green-300 text-sm mb-1">Secret</label>
                     <div className="relative">
                       <input
                         type={secretVisible ? "text" : "password"}
