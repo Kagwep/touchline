@@ -92,16 +92,13 @@ yarn dev
 ```
 
 ### Connecting Your Wallet
-
-1. Install a StarkNet-compatible wallet (ArgentX recommended)
-2. Connect to the StarkNet testnet
-3. Launch Touchline and connect your wallet
-4. Start collecting cards and building your squad!
+1. Launch Touchline and connect your cartrige controller
+2. Start collecting cards and building your squad!
 
 ## 🎯 How to Play
 
 ### 1. **Collect Cards**
-- Acquire player cards through packs or trading
+- Acquire player cards through marketplace
 - Each card has unique stats and abilities
 - Rarer cards have higher stats and special powers
 
@@ -134,19 +131,7 @@ yarn dev
 - Global chat and social features
 - Collection showcases
 
-### 📱 **Mobile Experience**
-- Native mobile app
-- Cross-platform progression
-- Touch-optimized gameplay
 
-## 🤝 Contributing
-
-We welcome contributions from the community! Whether you're a developer, designer, or football enthusiast, there are ways to get involved:
-
-- **Developers**: Submit PRs for bug fixes and features
-- **Designers**: Help improve UI/UX and card designs  
-- **Community**: Provide feedback, report bugs, and suggest features
-- **Content**: Help with documentation and guides
 
 ### Development Setup
 
@@ -183,14 +168,6 @@ VITE_SEPOLIA=false
 VITE_MAINNET=false
 ```
 
-## 📜 Smart Contract Addresses
-
-### StarkNet Testnet
-- **World Contract**: `0x5c03d111ab397c124a1533be0ec9f4857e8743f6bd7da2f083afc7bd30518c5`
-- **Actions System**: `0x3c05bc4562d839d904a4207d785d3c9a8ee6ded2d458c32616b743b4a2d4056`
-- **Players System**: `0x4b8a12ddf7ce5bd0d7a0b44d80ac586d1cfd1a6d58602f41d32ad17de7a3bff`
-- **Squad System**: `0x4b53410fdf210ad919dbf5f62d8f4b0cc80be440908840012e48d48fd69427f`
-- **Match System**: `0x2c58807b35829eeffd62f5dec6c6e86999abf4cba2f27ade99df8d177d6d5fa`
 
 ## 🛡️ Security & Fair Play
 
