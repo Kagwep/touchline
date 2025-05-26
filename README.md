@@ -4,6 +4,8 @@
 
 Touchline is a fully  ochain-based football card game built on Dojo that combines the thrill of collecting digital player cards with strategic squad building and competitive gameplay. Built on StarkNet using the Dojo framework, Touchline offers true ownership of your digital assets and transparent, provably fair gameplay.
 
+**[View Touchline Presentation](https://docs.google.com/presentation/d/1WNdB5Q5jx6liiFjLrBzMqR-YR1kWAgXSDXjz3u8jSRE/edit?usp=sharing)**
+
 ## 🎮 Game Overview
 
 Touchline brings the excitement of football card collecting. Players collect digital cards of real football players, build strategic squads, and compete in matches using a unique commit-reveal gameplay mechanism that ensures fair play and strategic depth.
@@ -153,7 +155,7 @@ katana --dev
 sozo migrate
 
 # Run Torii indexer (in another terminal)
-torii --world <WORLD_ADDRESS> --database-url sqlite://indexer.db
+torii --world 
 
 # Navigate to client and start frontend
 cd ../../client
