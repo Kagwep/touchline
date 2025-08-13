@@ -20,8 +20,6 @@ pub trait IActions<T> {
         );
     fn substitute_player(ref self: T,match_id:u128,prev_card: u128,card_id: u128,squad_id: u128);
     fn use_tactic_card(ref self: T,match_id:u128,card_id: u128);
-
-
 }
 
 // dojo decorator
